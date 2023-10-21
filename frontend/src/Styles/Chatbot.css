@@ -1,0 +1,32 @@
+.chatbot-btn {
+  background-color: #1a8efd;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  font-size: 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  position: fixed;
+  align-items: center;
+  z-index: 30;
+  bottom: 10%;
+  right: 4%;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+}
+
+.chatbot-btn-background{
+  opacity: 0.2;
+  bottom: 8%;
+  right: 3%;
+  background-color: #1a8ffd82
+}
+
+.chatbot-btn:hover {
+  color: #1a8efd;
+  background-color: white;
+  border: 1px solid #1a8efd;
+  transition: all 0.4s ease;
+}
