@@ -1,8 +1,12 @@
 import BodyImg from "../Assets/mainimg1.jpg";
-import { FaRobot } from "react-icons/fa";
+import { FaRobot, FaWindowClose } from "react-icons/fa";
 import "../Styles/Front.css";
+import { useContext } from "react";
+import { ChatbotOpen } from "./ChatbotOpen";
 
-function Hero() {
+function Front() {
+  const { open, setOpen } = useContext(ChatbotOpen);
+
   return (
     <div className="section-container">
       <div className="hero-section">
@@ -16,23 +20,23 @@ function Hero() {
             that determines your Prakriti and offers personalized dietary
             guidance for holistic well-being.
           </p>
-          {/* TODO : Use these button to call the chat bot ui */}
           <button
-            className="text-appointment-btn"
+            className={`${
+              open ? "text-appointment-btn-close" : "text-appointment-btn"
+            }`}
             type="button"
-            // onClick={handleBookAppointmentClick}
+            onClick={() => setOpen(!open)}
           >
-            <FaRobot size={20} />
-            <span>Open Chat Bot</span>
+            {open ? <FaWindowClose size={20} /> : <FaRobot size={20} />}
+            <span>{open ? "Close" : "Open"} Chat Bot</span>
           </button>
         </div>
 
         <div className="hero-image-section">
-          <img className="hero-image1" src={BodyImg} alt="Doctor" />
+          <img className="hero-image1" src={BodyImg} alt="Body" />
         </div>
       </div>
     </div>
   );
 }
-
-export default Hero;
+export default Front;

@@ -1,21 +1,22 @@
 import { FaRobot } from "react-icons/fa";
 import "../Styles/Chatbot.css";
 import "animate.css";
-import { useState } from "react";
+import { useContext } from "react";
 import Chatbot from "./Chatbot";
+import { ChatbotOpen } from "./ChatbotOpen";
 
 export const ChatbotButton = () => {
-  const [openChat, setOpenChat] = useState(false);
+  const { open, setOpen } = useContext(ChatbotOpen);
   return (
-    <div>
-      {!openChat ? (
+    <div className="">
+      {!open ? (
         <>
           <div className="chatbot-btn-background chatbot-btn w-40 h-20 p-40 opacity-20 animate__animated animate__zoomIn  animate__infinite"></div>
           <button
-            className="chatbot-btn relative "
+            className="chatbot-btn"
             type="button"
             onClick={() => {
-              setOpenChat(!openChat);
+              setOpen(!open);
             }}
           >
             <FaRobot fontSize={20} />
@@ -23,7 +24,7 @@ export const ChatbotButton = () => {
           </button>
         </>
       ) : (
-        <Chatbot open={openChat} set={setOpenChat} />
+        <Chatbot open={open} set={setOpen} />
       )}
     </div>
   );

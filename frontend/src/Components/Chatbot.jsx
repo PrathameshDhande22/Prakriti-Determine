@@ -1,22 +1,68 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
-import { IoSend, IoCloseSharp } from "react-icons/io5";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { IoCloseSharp } from "react-icons/io5";
 import "animate.css";
-import { FiMaximize2 } from "react-icons/fi";
-import { DeepChat } from "deep-chat-react";
+import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
+import { BsFillSendFill } from "react-icons/bs";
+import Messages from "./Messages";
+import { ChatMessage } from "./ChatMessage";
+import chatanim from "../Assets/chatanim.gif";
+import api from "../API/api";
 
 const Chatbot = ({ open, set }) => {
-  // const [queries, setQueries] = useState("");
+  const [queries, setQueries] = useState([]);
   const [fullsize, setFullSize] = useState(false);
+  const inputRef = useRef();
+  const messageRef = useRef();
+
+  const ScrolltoBottom = () => {
+    if (messageRef.current) {
+      const container = messageRef.current;
+      container.scrollTop = container.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    ScrolltoBottom();
+  }, [queries]);
+
+  const handleClick = useCallback(() => {
+    if (inputRef.current.value == "") {
+      return;
+    }
+    api
+      .post("/chat", {
+        name: "User",
+        message: inputRef.current.value,
+      })
+      .then((res) => {
+        setQueries([
+          ...queries,
+          {
+            name: "User",
+            message: inputRef.current.value,
+          },
+          res.data,
+        ]);
+        inputRef.current.value = "";
+      });
+  }, [queries]);
+
   return (
-    <div className="h-full">
+    <div className="relative h-full flex justify-center flex-col">
       <div
-        className={`z-30  rounded-lg border-4 border-blue-400  pb-5 bg-white animate__animated animate__fadeIn ${
-          fullsize ? "w-full h-screen top-0 absolute" : "fixed top-1/4 right-7"
+        className={`z-30 self-center rounded-lg border-4 border-sky-400  pb-5 bg-white animate__animated animate__fadeIn ${
+          fullsize
+            ? "w-full h-screen top-0 fixed"
+            : "w-[90%] sm:w-[400px] fixed sm:top-[15%] top-3 sm:right-7"
         }`}
       >
-        <div className="bg-sky-500 text-white px-3 py-2 flex flex-row justify-between text-lg font-serif">
-          <span>AyurBot</span>
+        <div className="bg-sky-400 font-playpen text-white px-3 py-2 flex flex-row justify-between text-lg font-serif items-center">
+          <span className="flex flex-row gap-3 text-lg items-center">
+            AyurBot
+            <img src={chatanim} className="w-10" />
+          </span>
           <div className="space-x-3">
             <button
               type="button"
@@ -25,7 +71,11 @@ const Chatbot = ({ open, set }) => {
                 setFullSize(!fullsize);
               }}
             >
-              <FiMaximize2 />
+              {!fullsize ? (
+                <FiMaximize2 size={20} />
+              ) : (
+                <FiMinimize2 size={20} />
+              )}
             </button>
             <button
               className="hover:bg-sky-400"
@@ -34,35 +84,41 @@ const Chatbot = ({ open, set }) => {
                 set(!open);
               }}
             >
-              <IoCloseSharp />
+              <IoCloseSharp size={20} />
             </button>
           </div>
         </div>
-        <div className="h-full">
-          <DeepChat
-            introMessage={{ text: "Send a Message to start the conversation." }}
-            style={{
-              borderRadius: "10px",
-              width: `${fullsize ? "100vw" : null}`,
-              height: `${fullsize ? "90vh" : null}`,
+        <div
+          className={`relative h-96 pt-4 pl-4 pb-4 mb-4 overflow-scroll`}
+          ref={messageRef}
+        >
+          <div className="relative flex flex-col gap-2">
+            <ChatMessage message={"Send a Message to Start a conversation"} />
+            <Messages queries={queries} />
+          </div>
+        </div>
+        <div className="flex flex-row items-center justify-between gap-3 absolute w-full bottom-0 p-2">
+          <input
+            ref={inputRef}
+            type="text"
+            name="query"
+            id="messageinput"
+            placeholder="Type Your message here"
+            className="px-4 py-2 border-gray-400 rounded-full outline-none border-2 w-full font-lora"
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                handleClick();
+              }
             }}
-            textInput={{ placeholder: { text: "Ask Me About Prakriti" } }}
-            request={{ url: "http://127.0.0.1:8000/chat", method: "POST" }}
           />
-        </div>
-        <div className="relative hidden">
-          <div className="h-3/4">lorem</div>
-          <div className="relative bottom-">
-            <input
-              type="text"
-              name="message"
-              id="msg"
-              // onChange={(e) => setQueries(e.target.value)}
-            />
-            <button type="button">
-              <IoSend />
-            </button>
-          </div>
+          <button
+            type="button"
+            className="p-3 bg-gradient-to-r from-blue-600 from-20% to-sky-400 text-white rounded-lg px-6 transition-colors hover:bg-gradient-to-l hover:from-blue-600 hover:to-sky-400 hover:from-20% "
+            id="sendbutton"
+            onClick={handleClick}
+          >
+            <BsFillSendFill size={20} />
+          </button>
         </div>
       </div>
     </div>
