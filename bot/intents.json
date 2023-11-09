@@ -1,0 +1,173 @@
+{
+  "intent": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "How are you?",
+        "Hey there, how have you been?",
+        "Is anyone there?",
+        "Hello",
+        "Good day",
+        "Hiii",
+        "Hii"
+      ],
+      "responses": [
+        "Hi there, what can I do for you?",
+        "Hey there, how can I help?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you there", "Goodbye"],
+      "responses": [
+        "See you later, thanks for visiting ",
+        "Have a nice day",
+        "Bye! Come back again soon."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Nice", "Good"],
+      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+    },
+    {
+      "tag": "about",
+      "patterns": [
+        "about you",
+        "Who are you?",
+        "What are you?",
+        "Who you are?",
+        "what you can do",
+        "What is the Purpose of the project"
+      ],
+      "responses": [
+        "I am AyurBot. I can help determine your prakriti type. Prakriti is our inherent nature, with which we are born. It is the nature of our body in terms of dosha. It dies not change during the whole lifetime. It is also responsible for the physical and mental characteristics."
+      ]
+    },
+    {
+      "tag": "name",
+      "patterns": [
+        "what is your name",
+        "what should I call you",
+        "whats your name?"
+      ],
+      "responses": [
+        "You can call me AyurBot.",
+        "I'm AyurBot!",
+        "Just call me as AyurBot"
+      ]
+    },
+    {
+      "tag": "help",
+      "patterns": [
+        "Could you help me?",
+        "give me a hand please",
+        "Can you help?",
+        "What can you do for me?",
+        "I need a support",
+        "I need a help",
+        "support me please"
+      ],
+      "responses": [
+        "Tell me how can I assist you",
+        "Tell me your problem to assist you",
+        "Yes Sure, How can I help you?"
+      ]
+    },
+    {
+      "tag": "noanswer",
+      "patterns": [
+        "Complete the work",
+        "My name",
+        "user name",
+        "you are not Good",
+        "Nothing",
+        "You are Bad",
+        "Noting to worry",
+        "Chatgpt is Best",
+        "Irrelevant"
+      ],
+      "responses": [
+        "Sorry, can't understand you",
+        "Please give me more info",
+        "Not sure I understand"
+      ]
+    },
+    {
+      "tag": "prakriti",
+      "patterns": [
+        "Can you help me find my prakriti",
+        "what is my prakriti?",
+        "figure out my prakriti",
+        "identify my prakriti",
+        "Determine my Prakriti",
+        "Determine"
+      ],
+      "responses": [
+        "Absolutely, just need you to answer a few questions",
+        "I can definitely do that with your help in answering some questions"
+      ]
+    },
+    {
+      "tag": "creators",
+      "patterns": [
+        "Who are the creators",
+        "who made these project",
+        "Project Creators",
+        "project is made by",
+        "Project",
+        "Which project",
+        "who created you"
+      ],
+      "responses": [
+        "These project is created by Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty & Goutam Thakur",
+        "This project was crafted by a talented team: Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur.",
+        "Meet the brilliant minds behind this project: Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur.",
+        "The masterminds responsible for this project are Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur.",
+        "Curious about the brains behind the project? It's the collaborative effort of Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur.",
+        "This project was brought to life by Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur."
+      ]
+    },
+    {
+      "tag": "badwords",
+      "patterns": [
+        "fuck you",
+        "Shut Up",
+        "i hate you",
+        "hate",
+        "You're so annoying",
+        "I can't stand you",
+        "Go away",
+        "You're worthless",
+        "You make me sick",
+        "I despise you"
+      ],
+      "responses": [
+        "I'm here to help, let's keep it respectful.",
+        "Please refrain from using offensive language.",
+        "Let's keep the conversation positive.",
+        "I'm here to assist you, no need for rude language.",
+        "Sorry to hear you're upset. Let's talk calmly.",
+        "Let's focus on constructive communication.",
+        "I'm here to provide support, no need for negativity.",
+        "Please choose a more respectful way to express your feelings.",
+        "I understand you might be frustrated, let's find a solution.",
+        "Respectful communication makes the conversation more productive."
+      ]
+    },
+    {
+      "tag": "acknowledge",
+      "patterns": ["ok", "yeah", "This should be best", "Now I Understand"],
+      "responses": [
+        "Great!",
+        "Got it!",
+        "Perfect!",
+        "Awesome!",
+        "Excellent!",
+        "Fantastic!",
+        "Terrific!"
+      ]
+    }
+  ]
+}
