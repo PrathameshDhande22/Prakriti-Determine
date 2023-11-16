@@ -69,10 +69,20 @@ def get_responses(msg: str) -> str:
     global flag, i, lis, limit
     if flag:
         if i != 0:
-            lis.append(int(msg) - 1)
+            try:
+                if int(msg) > 4:
+                    ans = "<strong>Wrong Answer</strong>"
+                    flag = False
+                    return ans
+                lis.append(int(msg) - 1)
+            except ValueError as v:
+                flag = False
+                return "<strong>Wrong Answer</strong>"
+
         ans = questions.get(i)
         if i == limit:
             flag = False
+            i = 0
             praki = get_ans([lis])
             ans = f"<p><strong>Your Prakriti is:</strong></p> {praki}"
 
