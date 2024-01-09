@@ -1,0 +1,107 @@
+{
+  "intent":[
+    {
+      "tag":"greeting",
+      "patterns":[
+        "Hi",
+        "How are you?",
+        "Hey there, how have you been?",
+        "Is anyone there?",
+        "Hello",
+        "Good day"
+      ],
+      "responses":[
+
+
+        "Hi there, what can I do for you?",
+        "Hey there, how can I help?"
+      ]
+    },
+    {
+      "tag":"goodbye",
+      "patterns":[
+        "Bye",
+        "See you there",
+        "Goodbye"
+      ],
+      "responses":[
+        "See you later, thanks for visiting",
+        "Have a nice day",
+        "Bye! Come back again soon."
+      ]
+    },
+    {
+      "tag":"thanks",
+      "patterns":[
+        "Thanks",
+        "Thank you",
+        "That's helpful"
+      ],
+      "responses": [
+        "Happy to help!", 
+        "Any time!", 
+        "My pleasure"
+      ]
+    },
+    {
+      "tag": "about",
+      "patterns": [
+      "about you", 
+      "Who are you?",
+      "What are you?", 
+      "Who you are?" 
+    ],
+      "responses": [
+      "I am Avni. I can help determine your prakriti type. Prakriti is our inherent nature, with which we are born. It is the nature of our body in terms of dosha. It dies not change during the whole lifetime. It is also responsible for the physical and mental characteristics."
+      ]
+    },
+    { 
+      "tag": "name",
+      "patterns": [
+        "what is your name", 
+        "what should I call you", 
+        "whats your name?"
+      ],
+      "responses": [
+        "You can call me Avvni.", 
+        "I'm Avvni!", 
+        "Just call me as Avvni"]
+    },
+    { "tag": "help",
+      "patterns": [
+        "Could you help me?", 
+        "give me a hand please", 
+        "Can you help?", 
+        "What can you do for me?", 
+        "I need a support", 
+        "I need a help", 
+        "support me please"],
+      "responses": [
+        "Tell me how can I assist you", 
+        "Tell me your problem to assist you", 
+        "Yes Sure, How can I help you?"]
+    },
+    {
+      "tag": "noanswer",
+      "patterns": [],
+      "responses": [
+        "Sorry, can't understand you",
+        "Please give me more info",
+        "Not sure I understand"
+      ]
+    },
+    {
+      "tag":"prakriti",
+      "patterns":[
+        "Can you help me find my prakriti",
+        "what is my prakriti?",
+        "figure out my prakriti",
+        "identify my prakriti"
+      ],
+      "responses":[
+        "Absolutely, just need you to answer a few questions",
+        "I can definitely do that with your help in answering some questions"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="../static/style_new.css">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 class="main_head">PrakritiGPT</h1>
+        <br>
+        <p class="type type1">Welcome to the world of Ayurveda</p>
+    </div>
+    <br>
+    <br>
+    <h3 style="font-family: Georgia, 'Times New Roman', Times, serif; font-weight: bold; font-size: 35px; text-shadow: 0px 0px 8px rgb(0,0,0);" >&#8594;FREQUENTLY ASKED QUESTIONS</h3>
+    <br>
+    <div class="layout">
+        <div class="accordion">
+            <div class="accordion__question">
+                <p>What is prakriti?</p>
+
+            </div>
+            <div class="accordion__answer">
+                <p>It is the nature of body in terms of dosha. It doesnot change during the whole life of the humnan being. It's responsible for the mental and physical characteristics of the being</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion__question">
+                <p>What are the basic doshas(components) of prakriti?</p>
+
+            </div>
+            <div class="accordion__answer">
+                <p>
+                    The three doshas of Prakriti are Vatta, Pitta and Kapha.
+                </p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion__question">
+                <p>How does prakriti helps us?</p>
+
+            </div>
+            <div class="accordion__answer">
+                <p>
+                    It helps in determining the reaction of body and mind when confronted by a stimulus.
+                </p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion__question">
+                <p>Why is the knowledge of Prakriti important?</p>
+
+            </div>
+            <div class="accordion__answer">
+                <p>
+                    With the knowledge of one's Prakrati, it is possible to apply Ayurvedic fundamentals in maintenance of health as well as prevention and cure of diseases.
+                </p>
+
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion__question">
+                <p>Who created Ayurveda?</p>
+
+            </div>
+            <div class="accordion__answer">
+                <p>
+                    Ayurveda is believed to have evolved over thousands of years in ancient India, and it does not have a single attributed founder. Instead, Ayurveda is considered a body of knowledge that developed through the contributions of many ancient scholars and practitioners.
+                </p>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="chatbox">
+        <div class="chatbox__support">
+            <div class="chatbox__header">
+                <div class="chatbox__image--header">
+                    <img src="https://img.icons8.com/dusk/64/bot--v1.png" alt="image">
+                </div>
+                <div class="chatbox__content--header">
+                    <h4 class="chatbox__heading--header">Prakriti Support</h4>
+                    <p class="chatbox__description--header">Hi. How can I help you?</p>
+                </div>
+            </div>
+            <div class="chatbox__messages">
+                <div></div>
+            </div>
+            <div class="chatbox__footer">
+                <input type="text" placeholder="Write a message...">
+                <button class="chatbox__send--footer send__button">Send</button>
+            </div>
+        </div>
+        <div class="chatbox__button">
+            <button><img src="https://img.icons8.com/fluency/48/speech-bubble-with-dots--v2.png" /></button>
+        </div>
+    </div>
+</div>
+
+    <footer class="idk">
+        <div class="real_footer"> Made with  &#9829;<br>
+            Team Syntax Synchronous <br><br>
+            <a href="https://github.com/Syntax-Synchronous/" class="anc" target="_blank">REACH US <span id="sp">(Syntax Synchronous)</span> </a>
+        </div>
+
+    </footer>
+
+    <script src="../static/app.js"></script>
+    <script>
+        let answers=document.querySelectorAll(".accordion");
+        answers.forEach((event)=>{
+            event.addEventListener('click',()=>{
+                if(event.classList.contains("active")){
+                    event.classList.remove("active");
+                }
+                else{
+                    event.classList.add("active");
+                }
+            })
+        })
+    </script>
+
+</body>
+</html>

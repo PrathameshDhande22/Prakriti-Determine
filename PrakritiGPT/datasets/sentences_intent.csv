@@ -1,0 +1,31 @@
+,Sentence,Target
+0,Hi,2
+1,How are you?,2
+2,"Hey there, how have you been?",2
+3,Is anyone there?,2
+4,Hello,2
+5,Good day,2
+6,Bye,1
+7,See you there,1
+8,Goodbye,1
+9,Thanks,6
+10,Thank you,6
+11,That's helpful,6
+12,about you,0
+13,Who are you?,0
+14,What are you?,0
+15,Who you are?,0
+16,what is your name,4
+17,what should I call you,4
+18,whats your name?,4
+19,Could you help me?,3
+20,give me a hand please,3
+21,Can you help?,3
+22,What can you do for me?,3
+23,I need a support,3
+24,I need a help,3
+25,support me please,3
+26,Can you help me find my prakriti,5
+27,what is my prakriti?,5
+28,figure out my prakriti,5
+29,identify my prakriti,5
