@@ -22,11 +22,10 @@ function Footer() {
         </div>
 
         <div className="ft-copyright">
-          <p>© 2023 Ayurlnsights. All rights reserved.</p>
+          <p>© 2023-2024 Ayurlnsights. All rights reserved.</p>
         </div>
         <div className="ft-developlist">
-          Developed by Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty &
-          Goutam Thakur
+          Developed by Prathamesh Dhande, Goutam Thakur, Chaitanya Mestry, &Lonith Shetty
         </div>
       </div>
     </div>
