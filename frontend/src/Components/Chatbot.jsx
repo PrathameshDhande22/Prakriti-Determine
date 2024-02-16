@@ -55,7 +55,7 @@ const Chatbot = ({ open, set }) => {
         className={`z-30 self-center rounded-lg border-4 border-sky-400  pb-5 bg-white animate__animated animate__fadeIn ${
           fullsize
             ? "w-full h-screen top-0 fixed"
-            : "w-[90%] sm:w-[400px] fixed sm:top-[15%] top-3 sm:right-7"
+            : "w-[90%] sm:w-[400px] fixed sm:top-[15%] top-3 sm:right-7 h-[95%] md:h-fit"
         }`}
       >
         <div className="bg-sky-400 font-playpen text-white px-3 py-2 flex flex-row justify-between text-lg font-serif items-center">
