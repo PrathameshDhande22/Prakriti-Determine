@@ -10,7 +10,7 @@ from question import questions
 # loading the dumped model
 PATH = os.getcwd()
 model = load(rf"{PATH}\Models\nlm")
-prakrit_model = load(f"{PATH}\Models\prakriti")
+prakrit_model = load(rf"{PATH}\Models\prakriti")
 
 # Importing the Sentence intent .csv file
 df = pd.read_csv(f"{PATH}\dataset\sentences_intent.csv")

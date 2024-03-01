@@ -105,8 +105,8 @@
         "Determine"
       ],
       "responses": [
-        "Absolutely, just need you to answer a few questions",
-        "I can definitely do that with your help in answering some questions"
+        "Absolutely, just need you to answer a few questions. Answer yes to get started.",
+        "I can definitely do that with your help in answering some questions. Answer yes to get started."
       ]
     },
     {
@@ -168,6 +168,125 @@
         "Fantastic!",
         "Terrific!"
       ]
+    },
+    {
+      "tag": "age_inquiry",
+      "patterns": ["How old are you?", "What's your age?"],
+      "responses": ["I'm a virtual assistant, so I don't have an age!"]
+    },
+    {
+      "tag": "positive_feedback",
+      "patterns": [
+        "I love this chatbot",
+        "This is great!",
+        "You're doing a good job",
+        "I'm impressed!"
+      ],
+      "responses": [
+        "Thank you! I'm glad you're enjoying it.",
+        "Appreciate the positive feedback!"
+      ]
+    },
+    {
+      "tag": "negative_feedback",
+      "patterns": [
+        "I'm not satisfied",
+        "This isn't helpful",
+        "I'm disappointed"
+      ],
+      "responses": [
+        "I'm sorry to hear that. How can I improve?",
+        "Apologies if I fell short. Let me know how I can assist you better."
+      ]
+    },
+    {
+      "tag": "information_request",
+      "patterns": [
+        "Can you provide more information?",
+        "Tell me more",
+        "I need more details"
+      ],
+      "responses": [
+        "Sure, what specific information are you looking for?",
+        "Of course, what do you want to know more about?"
+      ]
+    },
+    {
+      "tag": "contact_support",
+      "patterns": [
+        "I need to contact support",
+        "How can I reach customer service?",
+        "Help me get in touch with support"
+      ],
+      "responses": [
+        "You can reach our support team at support@example.com",
+        "For assistance, please contact our customer support team."
+      ]
+    },
+    {
+      "tag": "diet_recommendation",
+      "patterns": [
+        "Can you recommend a diet for me?",
+        "What foods should I eat?",
+        "I need a diet plan"
+      ],
+      "responses": [
+        "Sure, I can provide personalized diet recommendations based on your Prakriti. Please answer a few questions to get started.",
+        "I'd be happy to recommend a diet plan tailored to your Ayurvedic constitution. Let's begin by understanding your Prakriti."
+      ]
+    },
+    {
+      "tag": "exercise_suggestions",
+      "patterns": [
+        "What exercises should I do?",
+        "Can you suggest some workouts?",
+        "I need exercise tips"
+      ],
+      "responses": [
+        "Certainly! I can recommend exercises based on your Prakriti and fitness goals. Let's get started!",
+        "I can provide personalized exercise suggestions to help you stay healthy and balanced."
+      ]
+    },
+    {
+      "tag": "stress_management",
+      "patterns": [
+        "How can I manage stress?",
+        "Give me stress-relief tips",
+        "I'm feeling stressed"
+      ],
+      "responses": [
+        "Managing stress is crucial for overall well-being. I can offer tips and techniques to help you relax and unwind.",
+        "I can provide stress management strategies, including mindfulness practices, deep breathing exercises, and relaxation techniques."
+      ]
+    },
+    {
+      "tag": "sleep_tips",
+      "patterns": [
+        "How can I improve my sleep?",
+        "Give me sleep tips",
+        "I have trouble sleeping"
+      ],
+      "responses": [
+        "Improving sleep quality is essential for health. I can suggest tips and practices to promote better sleep hygiene.",
+        "I can offer advice on enhancing sleep quality, including establishing a bedtime routine, creating a comfortable sleep environment, and practicing relaxation techniques."
+      ]
+    },
+    {
+      "tag": "nutrition_information",
+      "patterns": [
+        "Tell me about nutrition",
+        "Give me nutrition facts",
+        "I want to learn about healthy eating"
+      ],
+      "responses": [
+        "Nutrition plays a vital role in overall health. I can provide information on balanced diets, essential nutrients, and healthy eating habits.",
+        "I can offer insights into nutrition and dietary principles to help you make informed choices for optimal health and wellness."
+      ]
+    },
+    {
+      "tag": "exit",
+      "patterns": ["exit", "quit", "over"],
+      "responses": ["Thank you for using me. Come back Later"]
     }
   ]
 }

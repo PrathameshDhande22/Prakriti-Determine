@@ -40,9 +40,6 @@ flatbuffers = "23.5.26"
 fonttools = "4.49.0"
 fqdn = "1.5.1"
 gast = "0.5.4"
-google-auth = "2.28.0"
-google-auth-oauthlib = "1.2.0"
-google-pasta = "0.2.0"
 grpcio = "1.60.1"
 h11 = "0.14.0"
 h5py = "3.10.0"
@@ -156,6 +153,7 @@ webencodings = "0.5.1"
 websocket-client = "1.7.0"
 werkzeug = "3.0.1"
 wrapt = "1.14.1"
+pyarrow = "^15.0.0"
 
 [build-system]
 requires = ["poetry-core"]
