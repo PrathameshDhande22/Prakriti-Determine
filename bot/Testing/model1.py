@@ -1,6 +1,5 @@
 import os
 from joblib import load
-import joblib
 import numpy as np
 
 # Testing the Prakrit Model
