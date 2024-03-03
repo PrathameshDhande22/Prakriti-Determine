@@ -9,7 +9,7 @@ target = ["Vata", "Pitta", "Kapha", "vata+pitta", "vata+kapha", "pitta+kapha"]
 
 # prediction on model
 res = model.predict(
-    np.array([[2, 1, 0, 2, 1, 0, 2, 0, 1, 0, 1, 1, 1, 1, 2, 1, 1, 0, 0, 0]])
+    np.array([[0,0,2,0,1,1,2,0,0,0,0,1,1,1,0,1,1,1,2,0]])
 )
 print(res)
 

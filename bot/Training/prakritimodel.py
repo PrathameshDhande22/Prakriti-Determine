@@ -59,7 +59,7 @@ model.compile(
 )
 
 logger.info("Training the Model Now.")
-model.fit(X_train, y_train, epochs=20, batch_size=64, validation_split=0.2)
+model.fit(X_train, y_train, epochs=25, batch_size=64, validation_split=0.2)
 
 logger.info("Dumping the Model as the object to Model Folder")
 dump(model, filename=str(os.path.join("Models/prakriti")))
