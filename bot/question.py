@@ -6,9 +6,9 @@ questions = {
     1: {
         "question": "What is your body weight?",
         "options": {
-            1: "Low- difficulties in gaining weight",
-            2: "Moderate- no difficulties in gaining or losing weight",
-            3: "Heavy- difficulties in losing weight",
+            1: "Low - difficulties in gaining weight",
+            2: "Moderate - no difficulties in gaining or losing weight",
+            3: "Heavy - difficulties in losing weight",
         },
     },
     2: {
@@ -18,25 +18,25 @@ questions = {
     3: {
         "question": "What is your bone structure?",
         "options": {
-            1: "Light, Small- prominent joints",
-            2: "Medium, bone structure",
-            3: "Large - broad shoulders , heavy bone structure",
+            1: "Light, Small bones, prominent joints",
+            2: "Medium bone structure",
+            3: "Large, broad shoulders , heavy bone structure",
         },
     },
     4: {
         "question": "What is your complexion?",
         "options": {
-            1: "Dark-tans easily",
-            2: "Fair- sunburns easily",
-            3: "White- pale, tans easily",
+            1: "Dark-Complexion, tans easily",
+            2: "Fair-skin sunburns easily",
+            3: "White, pale, tans easily",
         },
     },
     5: {
         "question": "Describe the general feel of skin",
         "options": {
-            1: "Dry and thin- cool to touch, rough",
+            1: "Dry and thin, cool to touch, rough",
             2: "Smooth and warm, oily T-zone",
-            3: "Thick and moist-greasy, cold",
+            3: "Thick and moist/greasy, cold",
         },
     },
     6: {
