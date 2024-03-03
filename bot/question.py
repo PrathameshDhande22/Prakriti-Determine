@@ -1,22 +1,146 @@
 questions = {
-    0: "<p><strong>What is the appearance of hair?</strong></p><p>1. Dry,Black, knotted, brittle</p><p>2. Straight, oily</p><p>3. Thick, curly</p>",
-    1: "<p><strong>What is your body weight?</strong><br /> 1. Low- difficulties in gaining weight<br /> 2.Moderate- no difficulties in gaining or losing weight<br /> 3.Heavy- difficulties in losing weight</p>",
-    2: "<p><strong>What is your height?</strong><br /> 1.Short<br /> 2.Average<br /> 3.Tall</p>",
-    3: "<p><strong>What is your bone structure?</strong><br /> 1.Light, Small- prominent joints<br /> 2.Medium, bone structure<br /> 3.Large - broad shoulders , heavy bone structure</p> ",
-    4: "<p><strong>What is your complexion?</strong><br /> 1.Dark-tans easily<br /> 2.Fair- sunburns easily<br /> 3.White- pale, tans easily</p>",
-    5: "<p><strong>Describe the general feel of skin-</strong><br /> 1.Dry and thin- cool to touch, rough<br /> 2.Smooth and warm, oily T-zone<br /> 3.Thick and moist-greasy, cold</p> ",
-    6: "<p><strong>Describe the skin texture:</strong><br /> 1.Dry, pigments and aging<br /> 2.Freckles, many moles, redness and rashes<br /> 3.Oily</p> ",
-    7: "<p><strong>What is your hair colour?</strong><br /> 1.Black/Brown,dull<br /> 2.Red, light brown, yellow<br /> 3.Brown</p>",
-    8: "<p><strong>Describe the appearance of your hair:</strong></p> <p>1.Dry, black, knotted, brittle</p <p>2.Straight, oily</p> <p>3.Thick, curly</p>",
-    9: "<p><strong>Describe the shape of face:</strong></p> <p>1.Long, angular, thin</p> <p>2.Heart-shaped, pointed chin</p> <p>3.Large, round, full</p>",
-    10: "<p><strong>Describe your eyes:</strong></p> <p>1.Small, active, darting, dark eyes</p> <p>2.Medium-sized, penetrating, light-sensitive eyes</p> <p>3.Big, round, beautiful, glowing eyes</p> ",
-    11: "<p><strong>Describe your eyelashes:</strong></p><p>1.Scanty eyelashes</p><p>2.Moderate eyelashes</p><p>3.Thick/Fused eyelashes</p>",
-    12: "<p><strong>How often do you blink your eyes?</strong></p> <p>1.Excessive Blinking</p> <p>2.Moderate Blinking</p> <p>3.More or less stable</p>",
-    13: "<p><strong>How are your cheeks?</strong></p> <p>1.Wrinkled, Sunken</p> <p>2.Smooth, Flat</p> <p>3.Rounded, Plump</p>",
-    14: "<p><strong>How is your nose?</strong></p> <p>1.Crooked, Narrow</p> <p>2.Pointed, Average</p> <p>3.Rounded, Large open nostrils</p>",
-    15: "<p><strong>Describe your teeth and gums:</strong></p> <p>1.Irregular, Protruding teeth, Receding gums</p> <p>2.Medium-sized teeth, Reddish gums</p> <p>3.Big, White, Strong teeth, Healthy gums</p>",
-    16: "<p><strong>How are your lips?</strong></p> <p>1.Tight, thin, dry lips which chaps easily</p> <p>2.Lips are soft, medium-sized</p> <p>3.Lips are large, soft, pink, and full</p>",
-    17: "<p><strong>How are your nails?</strong></p> <p>1.Dry, Rough, Brittle, Break</p> <p>2.Sharp, Flexible, Pink, Lustrous</p> <p>3.Thick, Oily, Smooth, Polished</p> ",
-    18: "<p><strong>What is your appetite like?</strong></p> <p>1.Irregular, Scanty</p> <p>2.Strong, Unbearable</p> <p>3.Slow but steady</p> ",
-    19: "<p><strong>What are some of your likable tastes?</strong></p> <p>1.Sweet / Sour / Salty</p> <p>2.Sweet / Bitter / Astringent</p> <p>3.Pungent / Bitter / Astringent</p>",
+    0: {
+        "question": "Describe your body Size?",
+        "options": {1: "Small", 2: "Medium", 3: "Large"},
+    },
+    1: {
+        "question": "What is your body weight?",
+        "options": {
+            1: "Low- difficulties in gaining weight",
+            2: "Moderate- no difficulties in gaining or losing weight",
+            3: "Heavy- difficulties in losing weight",
+        },
+    },
+    2: {
+        "question": "What is your height?",
+        "options": {1: "Short", 2: "Average", 3: "Tall"},
+    },
+    3: {
+        "question": "What is your bone structure?",
+        "options": {
+            1: "Light, Small- prominent joints",
+            2: "Medium, bone structure",
+            3: "Large - broad shoulders , heavy bone structure",
+        },
+    },
+    4: {
+        "question": "What is your complexion?",
+        "options": {
+            1: "Dark-tans easily",
+            2: "Fair- sunburns easily",
+            3: "White- pale, tans easily",
+        },
+    },
+    5: {
+        "question": "Describe the general feel of skin",
+        "options": {
+            1: "Dry and thin- cool to touch, rough",
+            2: "Smooth and warm, oily T-zone",
+            3: "Thick and moist-greasy, cold",
+        },
+    },
+    6: {
+        "question": "Describe the skin texture",
+        "options": {
+            1: "Dry, pigments and aging",
+            2: "Freckles, many moles, redness and rashes",
+            3: "Oily",
+        },
+    },
+    7: {
+        "question": "What is your hair colour?",
+        "options": {1: "Black/Brown,dull", 2: "Red, light brown, yellow", 3: "Brown"},
+    },
+    8: {
+        "question": "Describe the appearance of your hair",
+        "options": {
+            1: "Dry, black, knotted, brittle",
+            2: "Straight, oily",
+            3: "Thick, curly",
+        },
+    },
+    9: {
+        "question": "Describe the shape of face",
+        "options": {
+            1: "Long, angular, thin",
+            2: "Heart-shaped, pointed chin",
+            3: "Large, round, full",
+        },
+    },
+    10: {
+        "question": "Describe your eyes",
+        "options": {
+            1: "Small, active, darting, dark eyes",
+            2: "Medium-sized, penetrating, light-sensitive eyes",
+            3: "Big, round, beautiful, glowing eyes",
+        },
+    },
+    11: {
+        "question": "Describe your eyelashes",
+        "options": {
+            1: "Scanty eyelashes",
+            2: "Moderate eyelashes",
+            3: "Thick/Fused eyelashes",
+        },
+    },
+    12: {
+        "question": "How often do you blink your eyes?",
+        "options": {
+            1: "Excessive Blinking",
+            2: "Moderate Blinking",
+            3: "More or less stable",
+        },
+    },
+    13: {
+        "question": "How are your cheeks?",
+        "options": {1: "Wrinkled, Sunken", 2: "Smooth, Flat", 3: "Rounded, Plump"},
+    },
+    14: {
+        "question": "How is your nose?",
+        "options": {
+            1: "Crooked, Narrow",
+            2: "Pointed, Average",
+            3: "Rounded, Large open nostrils",
+        },
+    },
+    15: {
+        "question": "Describe your teeth and gums",
+        "options": {
+            1: "Irregular, Protruding teeth, Receding gums",
+            2: "Medium-sized teeth, Reddish gums",
+            3: "Big, White, Strong teeth, Healthy gums",
+        },
+    },
+    16: {
+        "question": "How are your lips?",
+        "options": {
+            1: "Tight, thin, dry lips which chaps easily",
+            2: "Lips are soft, medium-sized",
+            3: "Lips are large, soft, pink, and full",
+        },
+    },
+    17: {
+        "question": "How are your nails?",
+        "options": {
+            1: "Dry, Rough, Brittle, Break",
+            2: "Sharp, Flexible, Pink, Lustrous",
+            3: "Thick, Oily, Smooth, Polished",
+        },
+    },
+    18: {
+        "question": "What is your appetite like?",
+        "options": {
+            1: "Irregular, Scanty",
+            2: "Strong, Unbearable",
+            3: "Slow but steady",
+        },
+    },
+    19: {
+        "question": "What are some of your likable tastes?",
+        "options": {
+            1: "Sweet / Sour / Salty",
+            2: "Sweet / Bitter / Astringent",
+            3: "Pungent / Bitter / Astringent",
+        },
+    },
 }
