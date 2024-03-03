@@ -1,7 +1,7 @@
 questions = {
     0: {
         "question": "Describe your body Size?",
-        "options": {1: "Small", 2: "Medium", 3: "Large"},
+        "options": {1: "Slim", 2: "Medium", 3: "Large"},
     },
     1: {
         "question": "What is your body weight?",
