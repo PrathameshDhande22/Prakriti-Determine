@@ -10,7 +10,8 @@
         "Hello",
         "Good day",
         "Hiii",
-        "Hii"
+        "Hii",
+        "AyurBot"
       ],
       "responses": [
         "Hi there, what can I do for you?",
@@ -163,10 +164,7 @@
         "Great!",
         "Got it!",
         "Perfect!",
-        "Awesome!",
-        "Excellent!",
-        "Fantastic!",
-        "Terrific!"
+        "Awesome!"
       ]
     },
     {
@@ -192,7 +190,8 @@
       "patterns": [
         "I'm not satisfied",
         "This isn't helpful",
-        "I'm disappointed"
+        "I'm disappointed",
+        "Very bad bot."
       ],
       "responses": [
         "I'm sorry to hear that. How can I improve?",
@@ -204,7 +203,8 @@
       "patterns": [
         "Can you provide more information?",
         "Tell me more",
-        "I need more details"
+        "I need more details",
+        "give me more information"
       ],
       "responses": [
         "Sure, what specific information are you looking for?",
@@ -216,7 +216,8 @@
       "patterns": [
         "I need to contact support",
         "How can I reach customer service?",
-        "Help me get in touch with support"
+        "Help me get in touch with support",
+        "who to contact"
       ],
       "responses": [
         "You can reach our support team at support@example.com",
@@ -228,7 +229,8 @@
       "patterns": [
         "Can you recommend a diet for me?",
         "What foods should I eat?",
-        "I need a diet plan"
+        "I need a diet plan",
+        "Recommend me Diet"
       ],
       "responses": [
         "Sure, I can provide personalized diet recommendations based on your Prakriti. Please answer a few questions to get started.",
@@ -240,7 +242,8 @@
       "patterns": [
         "What exercises should I do?",
         "Can you suggest some workouts?",
-        "I need exercise tips"
+        "I need exercise tips",
+        "Recommend Some Exercise."
       ],
       "responses": [
         "Certainly! I can recommend exercises based on your Prakriti and fitness goals. Let's get started!",
