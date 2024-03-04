@@ -1,19 +1,18 @@
-from json import JSONDecodeError
-from fastapi import FastAPI, WebSocketDisconnect, status, WebSocket
+from typing import TypedDict
+from fastapi import FastAPI, WebSocketDisconnect, WebSocket
 from uvicorn import run
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from chatModule import getResponseChat, saveEveryResponse
+from chatModule import chatWithUser
 import sqlalchemy
 from sqlalchemy.orm import DeclarativeBase, Session
+from logger import logger
 
 
 class Base(DeclarativeBase):
     pass
 
 
-# creating the model
-class MessageModel(BaseModel):
+class Reply(TypedDict):
     name: str
     message: str
 
@@ -26,7 +25,7 @@ class Chat(Base):
     detected_tag = sqlalchemy.Column(sqlalchemy.String)
 
 
-app = FastAPI(debug=True)
+app = FastAPI(debug=True, docs_url=None, redoc_url=None)
 engine = sqlalchemy.create_engine("sqlite:///chats.db")
 session = Session(engine)
 
@@ -49,14 +48,13 @@ def hello():
 async def chatsocket(websocket: WebSocket):
     try:
         await websocket.accept()
+        await websocket.send_json({"name": "bot", "message": "Welcome to AyurBot 🙏"})
         while True:
-            received = await websocket.receive_json()
-            chat = getResponseChat(received["message"])
-            print(chat["tag"])
-            saveEveryResponse(received, Chat, session, chat["tag"])
+            received: Reply = await websocket.receive_json()
+            chat = await chatWithUser(received, Chat, session)
             await websocket.send_json({"name": "bot", "message": chat["response"]})
     except WebSocketDisconnect as e:
-        print(e)
+        logger.info(f"Disconnected from {e.reason} and {e.code}")
 
 
 if __name__ == "__main__":
