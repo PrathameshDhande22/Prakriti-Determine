@@ -1,4 +1,5 @@
-from typing import TypedDict
+from json import JSONDecodeError
+from typing import Any, TypedDict
 from fastapi import FastAPI, WebSocketDisconnect, WebSocket
 from uvicorn import run
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,7 +15,7 @@ class Base(DeclarativeBase):
 
 class Reply(TypedDict):
     name: str
-    message: str
+    message: Any
 
 
 class Chat(Base):
@@ -45,16 +46,21 @@ def hello():
 
 
 @app.websocket("/chat", name="Chatbot")
-async def chatsocket(websocket: WebSocket):
+async def chatsocket(websocket: WebSocket) -> Reply:
     try:
         await websocket.accept()
         await websocket.send_json({"name": "bot", "message": "Welcome to AyurBot 🙏"})
         while True:
             received: Reply = await websocket.receive_json()
             chat = await chatWithUser(received, Chat, session)
-            await websocket.send_json({"name": "bot", "message": chat["response"]})
+            await websocket.send_json({"name": "bot", "message": chat.get("response")})
     except WebSocketDisconnect as e:
-        logger.info(f"Disconnected from {e.reason} and {e.code}")
+        logger.error(f"Disconnected from {e.reason} and {e.code}")
+    except JSONDecodeError as js:
+        logger.error(f"Error While recieving JSON Data => {js}")
+    except AttributeError as ae:
+        await websocket.close()
+        logger.error(f"The Received message is in wrong format => {ae}")
 
 
 if __name__ == "__main__":

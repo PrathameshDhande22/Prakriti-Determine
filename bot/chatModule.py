@@ -47,12 +47,12 @@ def getResponseChat(msg: str) -> Response:
 def saveEveryResponse(
     received: dict[str, str], chat, session: Session, tag: str
 ) -> None:
-    newChat = chat(
+    newchat = chat(
         name=received["name"],
         message=received["message"],
         detected_tag=tag,
     )
-    session.add(newChat)
+    session.add(newchat)
     session.commit()
 
 
@@ -76,6 +76,13 @@ flag = False
 ans_list = []
 
 
+def clearAll():
+    global ans_list, i, flag
+    ans_list.clear()
+    i = -1
+    flag = False
+
+
 async def chatWithUser(msg: dict, Chat, session: Session) -> dict:
     global flag, limit, i, ans_list
     try:
@@ -83,12 +90,15 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> dict:
             i += 1
             if i != 0:
                 try:
-                    ans_list.append(int(msg["message"]))
+                    inputs = int(msg["message"])
+                    if inputs < 3 and inputs >= 0:
+                        ans_list.append(int(msg["message"]))
+                    else:
+                        i -= 1
+                        logger.info("Input given rather than 0,1,2")
                 except ValueError as e:
                     logger.warn(f"other than input is given - {e}")
-                    ans_list.clear()
-                    flag = False
-                    i = 0
+                    clearAll()
                     return {
                         "response": "OOPS! you not answered the question correctly quitting the questionare."
                     }
@@ -96,9 +106,7 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> dict:
             print(ans_list)
             if limit <= i:
                 prakriti = get_ans(ans_list)
-                i = 0
-                ans_list.clear()
-                flag = False
+                clearAll()
                 return {"response": f"Your Prakriti is {prakriti}"}
             return {"response": questions.get(i)}
         else:
