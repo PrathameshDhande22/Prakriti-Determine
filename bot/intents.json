@@ -29,7 +29,17 @@
     },
     {
       "tag": "thanks",
-      "patterns": ["Thanks", "Thank you", "That's helpful", "Nice", "Good"],
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "That's helpful",
+        "Nice",
+        "Good",
+        "Thank you Bot",
+        "Thank you soo much",
+        "You are Beautiful Bot",
+        "You are Great"
+      ],
       "responses": ["Happy to help!", "Any time!", "My pleasure"]
     },
     {
@@ -136,7 +146,6 @@
         "fuck you",
         "Shut Up",
         "i hate you",
-        "hate",
         "You're so annoying",
         "I can't stand you",
         "Go away",
@@ -160,17 +169,12 @@
     {
       "tag": "acknowledge",
       "patterns": ["ok", "yeah", "This should be best", "Now I Understand"],
-      "responses": [
-        "Great!",
-        "Got it!",
-        "Perfect!",
-        "Awesome!"
-      ]
+      "responses": ["Great!", "Got it!", "Perfect!", "Awesome!"]
     },
     {
       "tag": "age_inquiry",
       "patterns": ["How old are you?", "What's your age?"],
-      "responses": ["I'm a virtual assistant, so I don't have an age!"]
+      "responses": ["I'm a Ayurbot, so I don't have an age!"]
     },
     {
       "tag": "positive_feedback",
@@ -178,7 +182,8 @@
         "I love this chatbot",
         "This is great!",
         "You're doing a good job",
-        "I'm impressed!"
+        "I'm impressed!",
+        "You are Great"
       ],
       "responses": [
         "Thank you! I'm glad you're enjoying it.",
@@ -204,7 +209,8 @@
         "Can you provide more information?",
         "Tell me more",
         "I need more details",
-        "give me more information"
+        "give me more information",
+        "guide me"
       ],
       "responses": [
         "Sure, what specific information are you looking for?",
@@ -289,7 +295,67 @@
     {
       "tag": "exit",
       "patterns": ["exit", "quit", "over"],
-      "responses": ["Thank you for using me. Come back Later"]
+      "responses": [
+        "Thank you for using me. Come back Later",
+        "Hope you found the bot Helpful."
+      ]
+    },
+    {
+      "tag": "info_prakriti",
+      "patterns": ["what is prakriti", "tell me more about the prakriti"],
+      "responses": [
+        "Prakriti is a Sanskrit word that means the original or natural form or condition of anything, original or primary substance. It is a key concept in Hinduism, formulated by its Sankhya school. There are three types of doshas Vata, Pitta & Kapha",
+        "Prakriti is an inherent nature of an individual determined at the time of your birth, which can not be changed during your lifetime. Ayurveda broadly classifies human nature in two types - Mental and Physical Nature."
+      ]
+    },
+    {
+      "tag": "info_dosha",
+      "patterns": [
+        "What is doshas",
+        "tell me about the doshas",
+        "guide about the doshas"
+      ],
+      "responses": [
+        "According to Ayurveda, doshas are energy patterns that flow around our bodies, governing our thinking and behavior. The three primary doshas are vata, pitta, and kapha. Each dosha is made up of a different combination of the five elements: air, space, fire, earth, and water",
+        "According to Ayurveda, the doshas control the creation, maintenance, and breakdown of bodily tissue and elimination of wastes, as well as psychological aspects, such as emotions, understanding, and love. When balanced, the doshas maintain the systems of the body; when one of the doshas increases due to certain diet and lifestyle habits, imbalance is created. Ayurveda can help restore harmony to areas that have lost balance."
+      ]
+    },
+    {
+      "tag": "info_kapha",
+      "patterns": [
+        "What is kapha",
+        "explain about the kapha",
+        "kapha",
+        "what do you mean by kapha"
+      ],
+      "responses": [
+        "Kapha is based on earth and water. It can be described as steady, stable, heavy, slow, cold, and soft. Spring is known as kapha season, as many parts of the world slowly exit hibernation. People with this dosha are described as strong, thick-boned, and caring."
+      ]
+    },
+    {
+      "tag": "info_vata",
+      "patterns": [
+        "what is vata",
+        "vata",
+        "what do you mean about the vata",
+        "Explain about the kapha"
+      ],
+      "responses": [
+        "The word Vata means to blow or to move like the wind. Containing the elements like air and space, Vata manages all the movements in the mind and body. It controls blood flow, evacuation of wastes, breathing and the movement of thoughts across the brain."
+      ]
+    },
+    {
+      "tag": "info_pitta",
+      "patterns": [
+        "What is Pitta",
+        "pitta",
+        "Explain aobut the pitta",
+        "Guide about the pitta",
+        "what does mean pitta"
+      ],
+      "responses": [
+        "Pitta translates roughly as fire. However, the term does not mean fire in the literal sense, in the way you might experience or sense it as candlelight or in an open fire. Pitta dosha, the heat energy in the body, is invisible. It manifests itself in your metabolism."
+      ]
     }
   ]
 }
