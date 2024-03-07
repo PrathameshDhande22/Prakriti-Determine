@@ -2,7 +2,7 @@ import logging
 import os
 
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - Line No : %(lineno)d - %(message)s",
+    format="%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s",
     level=logging.INFO,
 )
 

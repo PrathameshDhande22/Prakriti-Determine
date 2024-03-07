@@ -2,7 +2,7 @@ import logging
 import sys
 
 # Initializing the logging module to log everything.
-format = "%(asctime)s - %(name)s - %(levelname)s - Line No : %(lineno)d - %(message)s"
+format = "%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s"
 logger = logging.getLogger(__name__)
 console_handler = logging.StreamHandler(stream=sys.stdout)
 formatter = logging.Formatter(fmt=format)
