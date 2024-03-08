@@ -53,7 +53,13 @@ async def chatsocket(websocket: WebSocket) -> Reply:
         while True:
             received: Reply = await websocket.receive_json()
             chat = await chatWithUser(received, Chat, session)
-            await websocket.send_json({"name": "bot", "message": chat.get("response")})
+            if isinstance(chat.get("response"), list):
+                for resps in chat.get("response"):
+                    await websocket.send_json({"name": "bot", "message": resps})
+            else:
+                await websocket.send_json(
+                    {"name": "bot", "message": chat.get("response")}
+                )
     except WebSocketDisconnect as e:
         logger.error(f"Disconnected from {e.reason} and {e.code}")
     except JSONDecodeError as js:
