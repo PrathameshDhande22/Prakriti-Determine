@@ -145,7 +145,13 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> dict:
             print(f"tag => {reply['tag']} , message => {reply['response']}")
             if reply["tag"] == "prakriti":
                 flag = True
-                resp = [reply.get("response"), {"options": {0: "yes", 1: "no"}}]
+                resp = [
+                    reply.get("response"),
+                    {
+                        "question": "Answer Yes to get Started",
+                        "options": {0: "yes", 1: "no"},
+                    },
+                ]
                 reply["response"] = resp
             await saveEveryResponse(msg, Chat, session, reply["tag"])
             return reply
