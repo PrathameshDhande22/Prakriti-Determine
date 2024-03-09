@@ -5,15 +5,15 @@ import "animate.css";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import { BsFillSendFill } from "react-icons/bs";
 import Messages from "./Messages";
-import { ChatMessage } from "./ChatMessage";
 import chatanim from "../Assets/chatanim.gif";
-import api from "../API/api";
+import ChatAPI from "../Config";
 
 const Chatbot = ({ open, set }) => {
   const [queries, setQueries] = useState([]);
   const [fullsize, setFullSize] = useState(false);
   const inputRef = useRef();
   const messageRef = useRef();
+  const [websckt, setWebsckt] = useState();
 
   const ScrolltoBottom = () => {
     if (messageRef.current) {
@@ -27,27 +27,34 @@ const Chatbot = ({ open, set }) => {
     ScrolltoBottom();
   }, [queries]);
 
+  useEffect(() => {
+    const ws = new WebSocket(`${ChatAPI}/chat`);
+    ws.onopen = () => {
+      ws.onmessage = (e) => {
+        const message = JSON.parse(e.data);
+        setQueries((old) => [...old, message]);
+      };
+      setWebsckt(ws);
+    };
+    inputRef.current.focus();
+    return () => {
+      ws.close();
+    };
+  }, []);
+
   const handleClick = useCallback(() => {
-    if (inputRef.current.value == "") {
+    if (inputRef.current.value === "") {
       return;
     }
-    api
-      .post("/chat", {
-        name: "User",
-        message: inputRef.current.value,
-      })
-      .then((res) => {
-        setQueries([
-          ...queries,
-          {
-            name: "User",
-            message: inputRef.current.value,
-          },
-          res.data,
-        ]);
-        inputRef.current.value = "";
-      });
-  }, [queries]);
+    const sendingMessage = { name: "User", message: inputRef.current.value };
+    setQueries((old) => [...old, sendingMessage]);
+    websckt.send(JSON.stringify(sendingMessage));
+    websckt.onmessage = (e) => {
+      const message = JSON.parse(e.data);
+      setQueries((old) => [...old, message]);
+    };
+    inputRef.current.value = "";
+  }, [websckt]);
 
   return (
     <div className="relative h-full flex justify-center flex-col">
@@ -89,11 +96,12 @@ const Chatbot = ({ open, set }) => {
           </div>
         </div>
         <div
-          className={`relative h-96 pt-4 pl-4 pb-4 mb-4 overflow-scroll`}
+          className={`relative ${
+            fullsize ? "h-[88%]" : "h-96"
+          } pt-4 pl-4 pb-4 mb-4 overflow-scroll`}
           ref={messageRef}
         >
           <div className="relative flex flex-col gap-2">
-            <ChatMessage message={"Send a Message to Start a conversation"} />
             <Messages queries={queries} />
           </div>
         </div>

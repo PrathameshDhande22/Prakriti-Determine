@@ -17,11 +17,11 @@
   border-radius: 50px;
 }
 
-.chatbot-btn-background{
+.chatbot-btn-background {
   opacity: 0.2;
   bottom: 8%;
   right: 3%;
-  background-color: #1a8ffd82
+  background-color: #1a8ffd82;
 }
 
 .chatbot-btn:hover {
@@ -29,4 +29,8 @@
   background-color: white;
   border: 1px solid #1a8efd;
   transition: all 0.4s ease;
+}
+
+.chatbot-helper {
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
