@@ -24,6 +24,10 @@ class Response(TypedDict):
     tag: str
 
 
+class ChatResponse(TypedDict):
+    response: dict | str
+
+
 def getResponseTag(msg: str) -> str:
     sentence_words = word_tokenize(msg)
     sentence_words = [lemmatizer.lemmatize(w) for w in sentence_words]
@@ -91,7 +95,7 @@ def clearAll(exclude=False) -> None:
         prakriti = None
 
 
-async def chatWithUser(msg: dict, Chat, session: Session) -> dict:
+async def chatWithUser(msg: dict, Chat, session: Session) -> ChatResponse:
     global flag, limit, i, ans_list, confirm, recommend, prakriti
     try:
         if flag:
