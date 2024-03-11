@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 import { RiRobot2Line } from "react-icons/ri";
 import parse from "html-react-parser";
+import { useContext, useState } from "react";
+import { ChatSendMessage } from "./Chatbot";
 
 export const ChatMessage = ({ message }) => {
+  const [selected, setSelected] = useState(false);
+  const { handleClick } = useContext(ChatSendMessage);
+
   if (typeof message === "string") {
     return (
       <>
@@ -25,16 +30,34 @@ export const ChatMessage = ({ message }) => {
               <div className="bg-gray-200 p-2 w-full  rounded-lg font-lora select-none">
                 {message["question"]}
               </div>
-              <div className="w-full pt-1 flex flex-row gap-1 justify-between items-center">
+              <div className="w-full pt-1 flex gap-1">
                 {Object.keys(message?.options).map((objkey, index) => {
                   return (
-                    <button
-                      type="button"
-                      className="font-lora capitalize border-2 border-gray-400 rounded-md w-1/2 py-1 shadow-lg"
+                    <div
                       key={index}
+                      className={`w-full gap-1 flex flex-row justify-between items-center ${
+                        selected && "hidden"
+                      }`}
                     >
-                      {String(message?.options[objkey])}
-                    </button>
+                      <input
+                        type="radio"
+                        name="confirmation"
+                        id="confirmbtn"
+                        className="hidden"
+                        value={String(message?.options[objkey])}
+                      />
+                      <label
+                        htmlFor="confirmbtn"
+                        onClick={(e) => {
+                          setSelected(true);
+                          handleClick(e.target.dataset?.value);
+                        }}
+                        className="font-lora text-center hover:bg-blue-600 select-none hover:text-white  transition-colors capitalize border-2 border-gray-400 rounded-md w-full py-1 shadow-lg"
+                        data-value={String(message?.options[objkey])}
+                      >
+                        {String(message?.options[objkey])}
+                      </label>
+                    </div>
                   );
                 })}
               </div>
@@ -51,14 +74,23 @@ export const ChatMessage = ({ message }) => {
               <div className="bg-gray-200 p-2 w-full rounded-lg font-lora select-none">
                 {message["question"]}
               </div>
-              <div className="w-full pt-1 flex flex-col flex-wrap gap-1 items-center">
+              <div
+                className={`w-full pt-2 flex flex-col flex-wrap gap-2 items-center ${
+                  selected && "hidden"
+                }`}
+              >
                 {Object.keys(message?.options).map((objkey, index) => {
                   return (
                     <button
-                      name={objkey}
                       type="button"
-                      className="font-lora capitalize border-2 border-gray-400 rounded-md w-full py-1 shadow-md"
                       key={index}
+                      htmlFor="confirmbtn"
+                      onClick={(e) => {
+                        handleClick(String(index), e.target.dataset?.value);
+                        setSelected(true);
+                      }}
+                      className="font-lora text-center hover:bg-blue-600 select-none hover:text-white  transition-colors capitalize border-2 py-1 border-gray-400 rounded-md w-full shadow-lg"
+                      data-value={String(message?.options[objkey])}
                     >
                       {String(message?.options[objkey])}
                     </button>

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import "animate.css";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
@@ -7,6 +7,8 @@ import { BsFillSendFill } from "react-icons/bs";
 import Messages from "./Messages";
 import chatanim from "../Assets/chatanim.gif";
 import ChatAPI from "../Config";
+
+export const ChatSendMessage = createContext();
 
 const Chatbot = ({ open, set }) => {
   const [queries, setQueries] = useState([]);
@@ -42,19 +44,33 @@ const Chatbot = ({ open, set }) => {
     };
   }, []);
 
-  const handleClick = useCallback(() => {
-    if (inputRef.current.value === "") {
-      return;
-    }
-    const sendingMessage = { name: "User", message: inputRef.current.value };
-    setQueries((old) => [...old, sendingMessage]);
-    websckt.send(JSON.stringify(sendingMessage));
-    websckt.onmessage = (e) => {
-      const message = JSON.parse(e.data);
-      setQueries((old) => [...old, message]);
-    };
-    inputRef.current.value = "";
-  }, [websckt]);
+  const handleClick = useCallback(
+    (selectedInput = undefined, messageToSend = undefined) => {
+      let inputValue;
+      if (selectedInput) {
+        inputValue = selectedInput;
+      } else {
+        inputValue = inputRef.current.value;
+      }
+      if (String(inputValue).length === 0) {
+        return;
+      }
+      const sendingMessage = { name: "User", message: inputValue };
+      setQueries((old) => [
+        ...old,
+        { name: "User", message: messageToSend ? messageToSend : inputValue },
+      ]);
+      websckt.send(JSON.stringify(sendingMessage));
+      websckt.onmessage = (e) => {
+        const message = JSON.parse(e.data);
+        setQueries((old) => [...old, message]);
+      };
+      if (!selectedInput) {
+        inputRef.current.value = "";
+      }
+    },
+    [websckt]
+  );
 
   return (
     <div className="relative h-full flex justify-center flex-col">
@@ -102,7 +118,9 @@ const Chatbot = ({ open, set }) => {
           ref={messageRef}
         >
           <div className="relative flex flex-col gap-2">
-            <Messages queries={queries} />
+            <ChatSendMessage.Provider value={{ handleClick }}>
+              <Messages queries={queries} />
+            </ChatSendMessage.Provider>
           </div>
         </div>
         <div className="flex flex-row items-center justify-between gap-3 absolute w-full bottom-0 p-2">
@@ -123,7 +141,7 @@ const Chatbot = ({ open, set }) => {
             type="button"
             className="p-3 bg-gradient-to-r from-blue-600 from-20% to-sky-400 text-white rounded-lg px-6 transition-colors hover:bg-gradient-to-l hover:from-blue-600 hover:to-sky-400 hover:from-20% "
             id="sendbutton"
-            onClick={handleClick}
+            onClick={() => handleClick()}
           >
             <BsFillSendFill size={20} />
           </button>
