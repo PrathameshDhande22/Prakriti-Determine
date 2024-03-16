@@ -1,16 +1,12 @@
 from json import JSONDecodeError
+import time
 from typing import Any, TypedDict
 from fastapi import FastAPI, WebSocketDisconnect, WebSocket
 from uvicorn import run
 from fastapi.middleware.cors import CORSMiddleware
 from chatModule import chatWithUser
-import sqlalchemy
-from sqlalchemy.orm import DeclarativeBase, Session
+from database import initDB,Chat
 from logger import logger
-
-
-class Base(DeclarativeBase):
-    pass
 
 
 class Reply(TypedDict):
@@ -18,19 +14,9 @@ class Reply(TypedDict):
     message: Any
 
 
-class Chat(Base):
-    __tablename__ = "chats"
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-    name = sqlalchemy.Column(sqlalchemy.String)
-    message = sqlalchemy.Column(sqlalchemy.String)
-    detected_tag = sqlalchemy.Column(sqlalchemy.String)
-
-
 app = FastAPI(debug=True, docs_url=None, redoc_url=None)
-engine = sqlalchemy.create_engine("sqlite:///chats.db")
-session = Session(engine)
+session = initDB()
 
-Base.metadata.create_all(engine)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -56,6 +42,7 @@ async def chatsocket(websocket: WebSocket) -> Reply:
             if isinstance(chat.get("response"), list):
                 for resps in chat.get("response"):
                     await websocket.send_json({"name": "bot", "message": resps})
+                    time.sleep(1.5)
             else:
                 await websocket.send_json(
                     {"name": "bot", "message": chat.get("response")}

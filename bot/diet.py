@@ -17,4 +17,4 @@ def recommend_Diet(prakriti: str) -> list[str]:
         recommends[1] = f"<b>To Avoid : </b>{recommends[1]}"
         return recommends
     except IndexError as ie:
-        logger.error(f"Rather than Prakrit given ie")
+        logger.error(f"Rather than Prakrit given {ie}")
