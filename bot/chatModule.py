@@ -1,14 +1,18 @@
 import json
 import os
 import random
-from typing import TypedDict
-from joblib import load
-from diet import recommend_Diet
-from question import questions
-from nltk import WordNetLemmatizer, word_tokenize
+from threading import Thread
+
 import numpy as np
+from joblib import load
+from nltk import WordNetLemmatizer, word_tokenize
 from sqlalchemy.orm import Session
+
+from database import Chat, Prakriti
+from diet import recommend_Diet
 from logger import logger
+from models import ChatResponse, PrakritBotResponse, Reply, Response
+from question import questions
 
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = str(0)
 chatBot_Model = load(os.path.join("Models/nlpbot"))
@@ -17,15 +21,6 @@ classes: list = load(os.path.join("Models/classes"))
 prakriti_Model = load(os.path.join("Models/prakriti"))
 intents = json.loads(open(os.path.join("intents.json"), "r").read())
 lemmatizer = WordNetLemmatizer()
-
-
-class Response(TypedDict):
-    response: str | list
-    tag: str
-
-
-class ChatResponse(TypedDict):
-    response: dict | str
 
 
 def getResponseTag(msg: str) -> str:
@@ -49,10 +44,42 @@ def getResponseChat(msg: str) -> Response:
             return {"response": random.choice(intent["responses"]), "tag": tag}
 
 
+def saveData(ans: list[int], session: Session) -> None:
+    data = {
+        "body_size": "",
+        "body_width": "",
+        "height": "",
+        "bone_structure": "",
+        "complexion": "",
+        "general_feel_of_skin": "",
+        "texture_of_skin": "",
+        "hair_color": "",
+        "appearance_of_hair": "",
+        "shape_of_face": "",
+        "eyes": "",
+        "eyelashes": "",
+        "blinking_of_eyes": "",
+        "cheeks": "",
+        "nose": "",
+        "teeth_and_gums": "",
+        "lips": "",
+        "nails": "",
+        "appetite": "",
+        "liking_tastes": "",
+        "dosha": ""
+    }
+    for i, k in enumerate(list(data.keys())):
+        data[k] = ans[i]
+    par = Prakriti(**data)
+    session.add(par)
+    session.commit()
+    logger.info("Saved the Data to DB")
+
+
 async def saveEveryResponse(
-    received: dict[str, str], chat, session: Session, tag: str
+    received: Reply, session: Session, tag: str
 ) -> None:
-    newchat = chat(
+    newchat = Chat(
         name=received["name"],
         message=received["message"],
         detected_tag=tag,
@@ -61,7 +88,7 @@ async def saveEveryResponse(
     session.commit()
 
 
-def get_ans(ans: list) -> str:
+def get_ans(ans: list[int]) -> PrakritBotResponse:
     val = prakriti_Model.predict(np.array([ans]))
     index = np.argmax(val)
     praks = {
@@ -72,23 +99,23 @@ def get_ans(ans: list) -> str:
         4: "Vata - Kapha",
         5: "Pitta - Kapha",
     }
-    return praks.get(index)
+    return PrakritBotResponse(index, praks.get(index))
 
 
-limit = len(questions)
-i = -1
+limit: int = len(questions)
+i: int = -1
 flag = False
-ans_list = []
-confirm = False
-recommend = False
-prakriti = None
-already_known = str()
-ask_Known = False
-start_questionaire = False
-count_wrong = 0
+ans_list: list = []
+confirm: bool = False
+recommend: bool = False
+prakriti: PrakritBotResponse = None
+already_known: str = str()
+ask_Known: bool = False
+start_questionaire: bool = False
+count_wrong: int = 0
 
 
-def clearAll(exclude=False) -> None:
+def clearAll(exclude: bool = False) -> None:
     global ans_list, i, flag, confirm, recommend, prakriti, already_known, ask_Known, start_questionaire, count_wrong
     ans_list.clear()
     i = -1
@@ -104,8 +131,8 @@ def clearAll(exclude=False) -> None:
         prakriti = None
 
 
-def askQuestion(msg):
-    global recommend, ans_list, prakriti, start_questionaire, i, limit
+def askQuestion(msg: Reply, session: Session) -> dict | str:
+    global recommend, ans_list, prakriti, start_questionaire, i, limit, already_known, ask_Known
     if start_questionaire:
         i += 1
         if i != 0:
@@ -123,7 +150,27 @@ def askQuestion(msg):
         print(ans_list)
         if limit <= i:
             prakriti = get_ans(ans_list)
-            msg = f"Your Prakriti is <b>{prakriti}</b>"
+            msg = f"Your Prakriti is <b>{prakriti.prakriti}</b>"
+            if prakriti.prakriti.lower().strip() == already_known and ask_Known:
+                ans_list.append(int(prakriti.index))
+                Thread(target=saveData, args=(ans_list, session)).start()
+                clearAll()
+                return [
+                    msg,
+                    "Thank you for taking the time to answer some questions. Your responses will greatly assist me in improving my accuracy.",
+                ]
+            elif ask_Known and prakriti.prakriti.lower().strip() != already_known:
+                clearAll(exclude=True)
+                recommend = True
+                return [
+                    msg,
+                    f"The input you provided is {already_known} and our model predicted as {prakriti.prakriti} is different.",
+                    "It seems that there may be one or more incorrect answers to the questions you provided. Please review and verify your responses.",
+                    {
+                        "question": "Want Diet Recommendation based on Your Prakriti?",
+                        "options": {0: "yes", 1: "no"},
+                    },
+                ]
             clearAll(exclude=True)
             recommend = True
             return [
@@ -137,7 +184,7 @@ def askQuestion(msg):
         return questions.get(i)
 
 
-def handleWrongAnswer(response):
+def handleWrongAnswer(response: str | dict | list) -> ChatResponse:
     global count_wrong
     count_wrong += 1
     if count_wrong < 3:
@@ -149,7 +196,7 @@ def handleWrongAnswer(response):
         }
 
 
-async def chatWithUser(msg: dict, Chat, session: Session) -> ChatResponse:
+async def chatWithUser(msg: Reply, session: Session) -> ChatResponse:
     global flag, limit, i, ans_list, confirm, count_wrong, recommend, prakriti, already_known, ask_Known, start_questionaire
     try:
         if flag:
@@ -188,7 +235,7 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> ChatResponse:
                 )
             elif confirm:
                 if start_questionaire:
-                    return {"response": askQuestion(msg)}
+                    return {"response": askQuestion(msg, session)}
                 else:
                     userMessage = str(msg.get("message")).lower().strip()
                     prakriti_types = [
@@ -208,7 +255,7 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> ChatResponse:
                                     "response": [
                                         f"Your Response has been recorded as <b>{already_known}</b>",
                                         "Please provide the answer to the following question to enhance my accuracy. I will then use your response for analysis.",
-                                        askQuestion(msg),
+                                        askQuestion(msg, session),
                                     ]
                                 }
                         else:
@@ -255,7 +302,7 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> ChatResponse:
                             return {
                                 "response": [
                                     "Answer the Above Set of Questions to Predict Your Prakriti",
-                                    askQuestion(msg),
+                                    askQuestion(msg, session),
                                 ]
                             }
                     else:
@@ -271,7 +318,7 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> ChatResponse:
 
         elif recommend:
             if str(msg.get("message")).lower().strip() == "yes":
-                diet = recommend_Diet(prakriti)
+                diet = recommend_Diet(prakriti.prakriti)
                 clearAll()
                 return {"response": diet}
             else:
@@ -290,7 +337,7 @@ async def chatWithUser(msg: dict, Chat, session: Session) -> ChatResponse:
                     },
                 ]
                 reply["response"] = resp
-            await saveEveryResponse(msg, Chat, session, reply["tag"])
+            await saveEveryResponse(msg, session, reply["tag"])
             return reply
     except Exception as e:
         clearAll()

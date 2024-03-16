@@ -8,7 +8,8 @@ class Base(DeclarativeBase):
 
 class Chat(Base):
     __tablename__ = "chats"
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    id = sqlalchemy.Column(
+        sqlalchemy.Integer, primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String)
     message = sqlalchemy.Column(sqlalchemy.String)
     detected_tag = sqlalchemy.Column(sqlalchemy.String)
@@ -16,13 +17,15 @@ class Chat(Base):
 
 class Prakriti(Base):
     __tablename__ = "dataset"
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    id = sqlalchemy.Column(
+        sqlalchemy.Integer, primary_key=True, autoincrement=True)
     body_size = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     body_width = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     height = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     bone_structure = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     complexion = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
-    general_feel_of_skin = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+    general_feel_of_skin = sqlalchemy.Column(
+        sqlalchemy.Integer, nullable=False)
     texture_of_skin = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     hair_color = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     appearance_of_hair = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)

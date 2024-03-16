@@ -1,18 +1,14 @@
-from json import JSONDecodeError
 import time
-from typing import Any, TypedDict
-from fastapi import FastAPI, WebSocketDisconnect, WebSocket
-from uvicorn import run
+from json import JSONDecodeError
+
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from uvicorn import run
+
 from chatModule import chatWithUser
-from database import initDB,Chat
+from database import initDB
 from logger import logger
-
-
-class Reply(TypedDict):
-    name: str
-    message: Any
-
+from models import ChatResponse, Reply
 
 app = FastAPI(debug=True, docs_url=None, redoc_url=None)
 session = initDB()
@@ -38,11 +34,11 @@ async def chatsocket(websocket: WebSocket) -> Reply:
         await websocket.send_json({"name": "bot", "message": "Welcome to AyurBot 🙏"})
         while True:
             received: Reply = await websocket.receive_json()
-            chat = await chatWithUser(received, Chat, session)
+            chat: ChatResponse = await chatWithUser(received, session)
             if isinstance(chat.get("response"), list):
                 for resps in chat.get("response"):
                     await websocket.send_json({"name": "bot", "message": resps})
-                    time.sleep(1.5)
+                    time.sleep(1.1)
             else:
                 await websocket.send_json(
                     {"name": "bot", "message": chat.get("response")}
@@ -50,6 +46,7 @@ async def chatsocket(websocket: WebSocket) -> Reply:
     except WebSocketDisconnect as e:
         logger.error(f"Disconnected from {e.reason} and {e.code}")
     except JSONDecodeError as js:
+        await websocket.close()
         logger.error(f"Error While recieving JSON Data => {js}")
     except AttributeError as ae:
         await websocket.close()
