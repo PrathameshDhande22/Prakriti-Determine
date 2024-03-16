@@ -7,6 +7,7 @@ import { BsFillSendFill } from "react-icons/bs";
 import Messages from "./Messages";
 import chatanim from "../Assets/chatanim.gif";
 import ChatAPI from "../Config";
+import Error from "./Error";
 
 export const ChatSendMessage = createContext();
 
@@ -16,6 +17,7 @@ const Chatbot = ({ open, set }) => {
   const inputRef = useRef();
   const messageRef = useRef();
   const [websckt, setWebsckt] = useState();
+  const [error, setError] = useState(false);
 
   const ScrolltoBottom = () => {
     if (messageRef.current) {
@@ -31,7 +33,11 @@ const Chatbot = ({ open, set }) => {
 
   useEffect(() => {
     const ws = new WebSocket(`${ChatAPI}/chat`);
+    ws.onerror = () => {
+      setError(true);
+    };
     ws.onopen = () => {
+      setError(false);
       ws.onmessage = (e) => {
         const message = JSON.parse(e.data);
         setQueries((old) => [...old, message]);
@@ -39,7 +45,9 @@ const Chatbot = ({ open, set }) => {
       setWebsckt(ws);
     };
     inputRef.current.focus();
+
     return () => {
+      setError(false);
       ws.close();
     };
   }, []);
@@ -52,7 +60,7 @@ const Chatbot = ({ open, set }) => {
       } else {
         inputValue = inputRef.current.value;
       }
-      if (String(inputValue).length === 0) {
+      if (String(inputValue).trim().length === 0) {
         return;
       }
       const sendingMessage = { name: "User", message: inputValue };
@@ -123,29 +131,34 @@ const Chatbot = ({ open, set }) => {
             </ChatSendMessage.Provider>
           </div>
         </div>
-        <div className="flex flex-row items-center justify-between gap-3 absolute w-full bottom-0 p-2">
-          <input
-            ref={inputRef}
-            type="text"
-            name="query"
-            id="messageinput"
-            placeholder="Type Your message here"
-            className="px-4 py-2 border-gray-400 rounded-full outline-none border-2 w-full font-lora"
-            onKeyDown={(e) => {
-              if (e.key == "Enter") {
-                handleClick();
-              }
-            }}
-          />
-          <button
-            type="button"
-            className="p-3 bg-gradient-to-r from-blue-600 from-20% to-sky-400 text-white rounded-lg px-6 transition-colors hover:bg-gradient-to-l hover:from-blue-600 hover:to-sky-400 hover:from-20% "
-            id="sendbutton"
-            onClick={() => handleClick()}
-          >
-            <BsFillSendFill size={20} />
-          </button>
-        </div>
+        {error ? (
+          <Error />
+        ) : (
+          <div className="flex flex-row items-center justify-between gap-3 absolute w-full bottom-0 p-2">
+            <input
+              ref={inputRef}
+              type="text"
+              name="query"
+              id="messageinput"
+              autoFocus
+              placeholder="Type Your message here"
+              className="px-4 py-2 border-gray-400 rounded-full outline-none border-2 w-full font-lora"
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  handleClick();
+                }
+              }}
+            />
+            <button
+              type="button"
+              className="p-3 bg-gradient-to-r from-blue-600 from-20% to-sky-400 text-white rounded-lg px-6 transition-colors hover:bg-gradient-to-l hover:from-blue-600 hover:to-sky-400 hover:from-20% "
+              id="sendbutton"
+              onClick={() => handleClick()}
+            >
+              <BsFillSendFill size={20} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ export const ChatMessage = ({ message }) => {
       <>
         <div className="flex flex-row items-center gap-2 h-full">
           <RiRobot2Line size={18} className="text-blue-800" />
-          <span className="bg-gray-200 p-2 w-[70%]  rounded-lg font-lora select-none">
+          <span className="bg-gray-200 p-2 w-[70%] animate__animated animate__faster animate__fadeIn  rounded-lg font-lora select-none">
             {parse(message)}
           </span>
         </div>
@@ -26,7 +26,7 @@ export const ChatMessage = ({ message }) => {
         <>
           <div className="flex flex-row items-center gap-2 h-full">
             <RiRobot2Line size={18} className="text-blue-800" />
-            <div className="w-[70%]">
+            <div className="w-[70%] animate__animated animate__faster animate__fadeIn">
               <div className="bg-gray-200 p-2 w-full  rounded-lg font-lora select-none">
                 {message["question"]}
               </div>
@@ -65,14 +65,14 @@ export const ChatMessage = ({ message }) => {
           </div>
         </>
       );
-    } else if (len === 3)
+    } else
       return (
         <>
           <div className="flex flex-row items-center gap-2 h-full">
             <RiRobot2Line size={18} className="text-blue-800" />
-            <div className="w-[70%]">
+            <div className="w-[70%] animate__animated animate__faster animate__fadeIn">
               <div className="bg-gray-200 p-2 w-full rounded-lg font-lora select-none">
-                {message["question"]}
+                {parse(message["question"])}
               </div>
               <div
                 className={`w-full pt-2 flex flex-col flex-wrap gap-2 items-center ${
@@ -86,7 +86,9 @@ export const ChatMessage = ({ message }) => {
                       key={index}
                       htmlFor="confirmbtn"
                       onClick={(e) => {
-                        handleClick(String(index), e.target.dataset?.value);
+                        len == 3
+                          ? handleClick(String(index), e.target.dataset?.value)
+                          : handleClick(e.target.dataset?.value);
                         setSelected(true);
                       }}
                       className="font-lora text-center hover:bg-blue-600 select-none hover:text-white  transition-colors capitalize border-2 py-1 border-gray-400 rounded-md w-full shadow-lg"
