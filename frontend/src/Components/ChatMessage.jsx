@@ -13,7 +13,7 @@ export const ChatMessage = ({ message }) => {
       <>
         <div className="flex flex-row items-center gap-2 h-full">
           <RiRobot2Line size={18} className="text-blue-800" />
-          <span className="bg-gray-200 p-2 w-[70%] animate__animated animate__faster animate__fadeIn  rounded-lg font-lora select-none">
+          <span className="bg-gray-200 p-2 w-[70%] animate__animated animate__faster animate__fadeIn  rounded-lg font-lora">
             {parse(message)}
           </span>
         </div>
@@ -27,7 +27,7 @@ export const ChatMessage = ({ message }) => {
           <div className="flex flex-row items-center gap-2 h-full">
             <RiRobot2Line size={18} className="text-blue-800" />
             <div className="w-[70%] animate__animated animate__faster animate__fadeIn">
-              <div className="bg-gray-200 p-2 w-full  rounded-lg font-lora select-none">
+              <div className="bg-gray-200 p-2 w-full  rounded-lg font-lora">
                 {message["question"]}
               </div>
               <div className="w-full pt-1 flex gap-1">
@@ -71,7 +71,7 @@ export const ChatMessage = ({ message }) => {
           <div className="flex flex-row items-center gap-2 h-full">
             <RiRobot2Line size={18} className="text-blue-800" />
             <div className="w-[70%] animate__animated animate__faster animate__fadeIn">
-              <div className="bg-gray-200 p-2 w-full rounded-lg font-lora select-none">
+              <div className="bg-gray-200 p-2 w-full rounded-lg font-lora ">
                 {parse(message["question"])}
               </div>
               <div
