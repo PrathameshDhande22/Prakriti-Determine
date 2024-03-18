@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-from database import initDB
+from sqlalchemy import Delete
+from database import initDB, Prakriti
 from question import questions
 
 
@@ -12,6 +13,8 @@ def addMoreDataFromDB():
     newdf.columns = df.columns
     df1 = pd.concat([df, newdf], ignore_index=True)
     df1.to_csv(os.path.join("Dataset", "data.csv"), index=False)
+    stmt = Delete(Prakriti)
+    session.execute(stmt)
 
 
 def createDataset():
