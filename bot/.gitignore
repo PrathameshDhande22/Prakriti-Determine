@@ -4,3 +4,4 @@ project/
 Models/
 prakriti.db
 *.log
+.env
