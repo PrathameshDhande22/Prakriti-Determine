@@ -1,5 +1,20 @@
+import pandas as pd
+from nltk.stem import WordNetLemmatizer
+import nltk
+import requests
+import json
+import numpy as np
+from keras.optimizers import SGD
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+import random
+from joblib import dump
 import logging
 import os
+from venv import logger
+from dotenv import load_dotenv
+
+load_dotenv(os.path.join(".env"))
 
 logging.basicConfig(
     format="%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s",
@@ -7,16 +22,6 @@ logging.basicConfig(
 )
 
 # Importing the required Modules
-from joblib import dump
-import random
-from keras.layers import Dense, Dropout
-from keras.models import Sequential
-from keras.optimizers import SGD
-import numpy as np
-import json
-import nltk
-from nltk.stem import WordNetLemmatizer
-import pandas as pd
 
 logging.info("Starting the Chatbot Model Training")
 
@@ -33,9 +38,19 @@ classes = []
 documents = []
 ignore_words = ["?", "!", ","]
 
-logging.info("Reading the Intents.json File")
-data_file = open(os.path.join("intents.json")).read()
-intents: dict[str, list] = json.loads(data_file)
+# logging.info("Reading the Intents.json File")
+# data_file = open(os.path.join("intents.json")).read()
+# intents: dict[str, list] = json.loads(data_file)
+
+# If you are running locally in your system then comment this line and uncomment the above lines.
+logger.info("Reading the json file from JSILO online Storage")
+url = 'https://api.jsonsilo.com/5ff310a1-b136-45a7-86c3-0b7378ebfd6c'
+headers = {
+    'X-SILO-KEY': os.environ.get("JSILO_API_KEY"),
+    'Content-Type': 'application/json'
+}
+new_data = requests.get(url, headers=headers)
+intents = new_data.json()
 
 logging.info("Tokenizing the each pattern in the intents.json file")
 for intent in intents["intent"]:
@@ -47,7 +62,8 @@ for intent in intents["intent"]:
             classes.append(intent["tag"])
 
 logging.info("removing the words which doesn't mean anything")
-words = [lemmatizer.lemmatize(w.lower()) for w in words if w not in ignore_words]
+words = [lemmatizer.lemmatize(w.lower())
+         for w in words if w not in ignore_words]
 
 logging.info("Sorting words, classes and documents")
 words = sorted(list(set(words)))
@@ -58,8 +74,8 @@ print(len(classes), "classes", classes)
 print(len(words), "unique lemmatized words", words)
 
 logging.info("Dumping the words and classes as an binary object")
-dump(words,os.path.join("Models/words"))
-dump(classes,os.path.join("Models/classes"))
+dump(words, os.path.join("Models/words"))
+dump(classes, os.path.join("Models/classes"))
 
 logging.info("Initiating the Training data")
 training = []
@@ -67,7 +83,8 @@ output_empty = [0] * len(classes)
 for doc in documents:
     bag = []
     pattern_words = doc[0]
-    pattern_words = [lemmatizer.lemmatize(word.lower()) for word in pattern_words]
+    pattern_words = [lemmatizer.lemmatize(
+        word.lower()) for word in pattern_words]
     for w in words:
         bag.append(1) if w in pattern_words else bag.append(0)
     output_row = list(output_empty)
@@ -108,10 +125,12 @@ model.add(Dense(len(train_y[0]), activation="softmax"))
 
 logging.info("Compiling the Model")
 sgd = SGD(learning_rate=0.01, momentum=0.9, nesterov=True)
-model.compile(loss="categorical_crossentropy", optimizer=sgd, metrics=["accuracy"])
+model.compile(loss="categorical_crossentropy",
+              optimizer=sgd, metrics=["accuracy"])
 
 logging.info("Training the Model with X and Y data")
-model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
+model.fit(np.array(train_x), np.array(train_y),
+          epochs=200, batch_size=5, verbose=1)
 
 logging.info("Model has been Trained")
 logging.info("dumping the Model")

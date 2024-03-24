@@ -18,3 +18,13 @@ class Reply(TypedDict):
 class PrakritBotResponse(NamedTuple):
     index: int
     prakriti: str
+
+
+class Intent(TypedDict):
+    tag: str
+    patterns: list[str]
+    responses: list[str]
+
+
+class Intents(TypedDict):
+    intent: list[Intent]

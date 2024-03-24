@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from database import Chat, Prakriti
 from diet import recommend_Diet
+from intentsLoader import getIntents
 from logger import logger
 from models import ChatResponse, PrakritBotResponse, Reply, Response
 from question import questions
@@ -19,9 +20,9 @@ chatBot_Model = load(os.path.join("Models/nlpbot"))
 words: list = load(os.path.join("Models/words"))
 classes: list = load(os.path.join("Models/classes"))
 prakriti_Model = load(os.path.join("Models/prakriti"))
-intents = json.loads(open(os.path.join("intents.json"), "r").read())
+# intents = json.loads(open(os.path.join("intents.json"), "r").read())
+intents = getIntents()
 lemmatizer = WordNetLemmatizer()
-
 
 def getResponseTag(msg: str) -> str:
     sentence_words = word_tokenize(msg)
