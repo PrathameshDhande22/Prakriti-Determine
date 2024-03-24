@@ -1,17 +1,17 @@
-from fastapi import FastAPI, status
-from uvicorn import run
+import time
+from json import JSONDecodeError
+
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from chatModule import get_responses
+from uvicorn import run
 
+from chatModule import chatWithUser
+from database import initDB
+from logger import logger
+from models import ChatResponse, Reply
 
-# creating the model
-class MessageModel(BaseModel):
-    name: str
-    message: str
-
-
-app = FastAPI(debug=True)
+app = FastAPI(debug=True, docs_url=None, redoc_url=None)
+session = initDB()
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,11 +27,30 @@ def hello():
     return {"message": "hello World"}
 
 
-@app.post("/chat", status_code=status.HTTP_200_OK)
-def chats(message: MessageModel):
-    reply = get_responses(message.message)
-    print(f"Reply for message -> {message.message} => {reply}")
-    return {"name": "Bot", "message": reply}
+@app.websocket("/chat", name="Chatbot")
+async def chatsocket(websocket: WebSocket) -> Reply:
+    try:
+        await websocket.accept()
+        await websocket.send_json({"name": "bot", "message": "Welcome to AyurBot 🙏"})
+        while True:
+            received: Reply = await websocket.receive_json()
+            chat: ChatResponse = await chatWithUser(received, session)
+            if isinstance(chat.get("response"), list):
+                for resps in chat.get("response"):
+                    await websocket.send_json({"name": "bot", "message": resps})
+                    time.sleep(1.1)
+            else:
+                await websocket.send_json(
+                    {"name": "bot", "message": chat.get("response")}
+                )
+    except WebSocketDisconnect as e:
+        logger.error(f"Disconnected from {e.reason} and {e.code}")
+    except JSONDecodeError as js:
+        await websocket.close()
+        logger.error(f"Error While recieving JSON Data => {js}")
+    except AttributeError as ae:
+        await websocket.close()
+        logger.error(f"The Received message is in wrong format => {ae}")
 
 
 if __name__ == "__main__":

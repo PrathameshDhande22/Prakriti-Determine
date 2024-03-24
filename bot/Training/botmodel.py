@@ -1,76 +1,137 @@
 import pandas as pd
+from nltk.stem import WordNetLemmatizer
+import nltk
+import requests
 import json
-from tensorflow import keras
-from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
+from keras.optimizers import SGD
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+import random
 from joblib import dump
+import logging
 import os
+from venv import logger
+from dotenv import load_dotenv
 
-PATH = os.getcwd()
+load_dotenv(os.path.join(".env"))
 
-with open(f"{PATH}\intents.json", "r") as f:
-    intents = json.load(f)
-intents = intents["intent"]
+logging.basicConfig(
+    format="%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s",
+    level=logging.INFO,
+)
 
-tags = []
-xy = []
-len_dict = 0
-for intent in intents:
-    tag = intent["tag"]
-    tags.append(tag)
+# Importing the required Modules
+
+logging.info("Starting the Chatbot Model Training")
+
+logging.info("Initializing the Lemmatizer")
+lemmatizer = WordNetLemmatizer()
+
+logging.info("Downloading the required packages for NLP")
+nltk.download("omw-1.4")
+nltk.download("punkt")
+nltk.download("wordnet")
+
+words = []
+classes = []
+documents = []
+ignore_words = ["?", "!", ","]
+
+# logging.info("Reading the Intents.json File")
+# data_file = open(os.path.join("intents.json")).read()
+# intents: dict[str, list] = json.loads(data_file)
+
+# If you are running locally in your system then comment this line and uncomment the above lines.
+logger.info("Reading the json file from JSILO online Storage")
+url = 'https://api.jsonsilo.com/5ff310a1-b136-45a7-86c3-0b7378ebfd6c'
+headers = {
+    'X-SILO-KEY': os.environ.get("JSILO_API_KEY"),
+    'Content-Type': 'application/json'
+}
+new_data = requests.get(url, headers=headers)
+intents = new_data.json()
+
+logging.info("Tokenizing the each pattern in the intents.json file")
+for intent in intents["intent"]:
     for pattern in intent["patterns"]:
-        len_dict = len_dict + 1
-        w = pattern
-        xy.append((w, tag))
-df = pd.DataFrame(xy)
-df.rename(columns={0: "Sentence", 1: "Target"}, inplace=True)
-named_y = df["Target"]
+        w = nltk.word_tokenize(pattern)
+        words.extend(w)
+        documents.append((w, intent["tag"]))
+        if intent["tag"] not in classes:
+            classes.append(intent["tag"])
 
-from sklearn.preprocessing import LabelEncoder
+logging.info("removing the words which doesn't mean anything")
+words = [lemmatizer.lemmatize(w.lower())
+         for w in words if w not in ignore_words]
 
-lb = LabelEncoder()
-df["Target"] = lb.fit_transform(df["Target"])
-df.set_index("Sentence")
+logging.info("Sorting words, classes and documents")
+words = sorted(list(set(words)))
+classes = sorted(list(set(classes)))
 
-df.reset_index(drop=True)
-df.to_csv(f"{PATH}/dataset/sentences_intent.csv", index=False)
+print(len(documents), "documents")
+print(len(classes), "classes", classes)
+print(len(words), "unique lemmatized words", words)
 
-X_train = df.Sentence
-y_train = df.Target
+logging.info("Dumping the words and classes as an binary object")
+dump(words, os.path.join("Models/words"))
+dump(classes, os.path.join("Models/classes"))
 
-labels = {}
-for i in range(len_dict):
-    labels[y_train[i]] = named_y[i]
+logging.info("Initiating the Training data")
+training = []
+output_empty = [0] * len(classes)
+for doc in documents:
+    bag = []
+    pattern_words = doc[0]
+    pattern_words = [lemmatizer.lemmatize(
+        word.lower()) for word in pattern_words]
+    for w in words:
+        bag.append(1) if w in pattern_words else bag.append(0)
+    output_row = list(output_empty)
+    output_row[classes.index(doc[1])] = 1
+    training.append([bag, output_row])
 
-print(labels)
+logging.info("Training Dataset has been Created")
 
-vec = CountVectorizer(min_df=1)
-X_train_count = vec.fit_transform(X_train.values)
-bag_len = len(X_train_count.toarray()[0])
+logging.info("Creating the training dataset and saving it.")
+dataset = {}
+for w in words:
+    dataset[w] = []
+dataset["tag"] = []
+for train in training:
+    for w, value in list(zip(words, train[0])):
+        dataset[w].append(value)
+    dataset["tag"].append(classes[np.argmax(train[1])])
+index = []
+for docu in documents:
+    index.append(" ".join(docu[0]))
+df = pd.DataFrame(dataset, index=index)
+df.to_csv(os.path.join("dataset/sentences.csv"))
 
-df_bow = pd.DataFrame(X_train_count.toarray(), columns=vec.get_feature_names_out())
-X_train = df_bow.to_numpy()
+random.shuffle(training)
+training_data = np.array(training, dtype=object)
 
-model = keras.Sequential(
-    [
-        keras.layers.Dense(
-            1000,
-            input_shape=(bag_len,),
-            activation="relu",
-        ),
-        keras.layers.Dense(
-            100,
-            activation="relu",
-        ),
-        keras.layers.Dense(
-            11,
-            activation="sigmoid",
-        ),
-    ]
-)
+logging.info("Extracting the X and Y values from the training data")
+train_x = list(training_data[:, 0])
+train_y = list(training_data[:, 1])
 
-model.compile(
-    optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
-)
+logging.info("Initializing the Keras Model")
+model = Sequential()
+model.add(Dense(128, input_shape=(len(train_x[0]),), activation="relu"))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation="relu"))
+model.add(Dropout(0.5))
+model.add(Dense(len(train_y[0]), activation="softmax"))
 
-model.fit(X_train, y_train, epochs=100)
-dump(model, f"{PATH}/Models/nlm")
+logging.info("Compiling the Model")
+sgd = SGD(learning_rate=0.01, momentum=0.9, nesterov=True)
+model.compile(loss="categorical_crossentropy",
+              optimizer=sgd, metrics=["accuracy"])
+
+logging.info("Training the Model with X and Y data")
+model.fit(np.array(train_x), np.array(train_y),
+          epochs=200, batch_size=5, verbose=1)
+
+logging.info("Model has been Trained")
+logging.info("dumping the Model")
+dump(model, os.path.join("Models/nlpbot"))
