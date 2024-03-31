@@ -1,7 +1,6 @@
 import pandas as pd
 from nltk.stem import WordNetLemmatizer
 import nltk
-import requests
 import json
 import numpy as np
 from keras.optimizers import SGD
@@ -12,9 +11,6 @@ from joblib import dump
 import logging
 import os
 from venv import logger
-from dotenv import load_dotenv
-
-load_dotenv(os.path.join(".env"))
 
 logging.basicConfig(
     format="%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s",
@@ -38,19 +34,9 @@ classes = []
 documents = []
 ignore_words = ["?", "!", ","]
 
-# logging.info("Reading the Intents.json File")
-# data_file = open(os.path.join("intents.json")).read()
-# intents: dict[str, list] = json.loads(data_file)
-
-# If you are running locally in your system then comment this line and uncomment the above lines.
-logger.info("Reading the json file from JSILO online Storage")
-url = 'https://api.jsonsilo.com/5ff310a1-b136-45a7-86c3-0b7378ebfd6c'
-headers = {
-    'X-SILO-KEY': os.environ.get("JSILO_API_KEY"),
-    'Content-Type': 'application/json'
-}
-new_data = requests.get(url, headers=headers)
-intents = new_data.json()
+logging.info("Reading the Intents.json File")
+data_file = open(os.path.join("intents.json")).read()
+intents: dict[str, list] = json.loads(data_file)
 
 logging.info("Tokenizing the each pattern in the intents.json file")
 for intent in intents["intent"]:
