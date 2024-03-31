@@ -19,6 +19,17 @@
       ]
     },
     {
+      "tag": "src_code",
+      "patterns": [
+        "What is your Source Code",
+        "Source Code",
+        "Where is your Source Code"
+      ],
+      "responses": [
+        "My Source Code is Available in <a href='https://github.com/PrathameshDhande22/Prakriti-Determine'> Github Repository </a>."
+      ]
+    },
+    {
       "tag": "goodbye",
       "patterns": ["Bye", "See you there", "Goodbye"],
       "responses": [
@@ -50,7 +61,9 @@
         "What are you?",
         "Who you are?",
         "what you can do",
-        "What is the Purpose of the project"
+        "What is the Purpose of the project",
+        "tell me about you",
+        "What can you do ?"
       ],
       "responses": [
         "I am AyurBot. I can help determine your prakriti type. Prakriti is our inherent nature, with which we are born. It is the nature of our body in terms of dosha. It dies not change during the whole lifetime. It is also responsible for the physical and mental characteristics."
@@ -87,7 +100,7 @@
       ]
     },
     {
-      "tag": "noanswer",
+      "tag": "irrelevant",
       "patterns": [
         "Complete the work",
         "My name",
@@ -97,12 +110,20 @@
         "You are Bad",
         "Noting to worry",
         "Chatgpt is Best",
-        "Irrelevant"
+        "Irrelevant",
+        "fuck you",
+        "shut up",
+        "Suggest me Exercise",
+        "Exercise Suggestion",
+        "Nutrition Information",
+        "When to sleep",
+        "Sleep Tips",
+        "Provide me the Sleep Tips",
+        "Give me ColdDrink",
+        "Are you Dump"
       ],
       "responses": [
-        "Sorry, can't understand you",
-        "Please give me more info",
-        "Not sure I understand"
+        "My main focus is on identifying Prakriti in Ayurveda. For any questions about Prakriti or Ayurveda, feel free to ask!"
       ]
     },
     {
@@ -113,7 +134,9 @@
         "figure out my prakriti",
         "identify my prakriti",
         "Determine my Prakriti",
-        "Determine"
+        "Determine",
+        "Detect my Prakriti",
+        "How can i detect my Prakriti?"
       ],
       "responses": [
         "Absolutely, just need you to answer a few questions.",
@@ -138,32 +161,6 @@
         "The masterminds responsible for this project are Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur.",
         "Curious about the brains behind the project? It's the collaborative effort of Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur.",
         "This project was brought to life by Prathamesh Dhande, Chaitanya Mestry, Lonith Shetty, and Goutam Thakur."
-      ]
-    },
-    {
-      "tag": "badwords",
-      "patterns": [
-        "fuck you",
-        "Shut Up",
-        "i hate you",
-        "You're so annoying",
-        "I can't stand you",
-        "Go away",
-        "You're worthless",
-        "You make me sick",
-        "I despise you"
-      ],
-      "responses": [
-        "I'm here to help, let's keep it respectful.",
-        "Please refrain from using offensive language.",
-        "Let's keep the conversation positive.",
-        "I'm here to assist you, no need for rude language.",
-        "Sorry to hear you're upset. Let's talk calmly.",
-        "Let's focus on constructive communication.",
-        "I'm here to provide support, no need for negativity.",
-        "Please choose a more respectful way to express your feelings.",
-        "I understand you might be frustrated, let's find a solution.",
-        "Respectful communication makes the conversation more productive."
       ]
     },
     {
@@ -196,7 +193,8 @@
         "I'm not satisfied",
         "This isn't helpful",
         "I'm disappointed",
-        "Very bad bot."
+        "Very bad bot.",
+        "i will not believe you"
       ],
       "responses": [
         "I'm sorry to hear that. How can I improve?",
@@ -226,8 +224,7 @@
         "who to contact"
       ],
       "responses": [
-        "You can reach our support team at support@example.com",
-        "For assistance, please contact our customer support team."
+        "You can reach our support team at developerprathamesh.coder@gmail.com"
       ]
     },
     {
@@ -239,57 +236,7 @@
         "Recommend me Diet"
       ],
       "responses": [
-        "Sure, I can provide personalized diet recommendations based on your Prakriti. Please answer a few questions to get started.",
-        "I'd be happy to recommend a diet plan tailored to your Ayurvedic constitution. Let's begin by understanding your Prakriti."
-      ]
-    },
-    {
-      "tag": "exercise_suggestions",
-      "patterns": [
-        "What exercises should I do?",
-        "Can you suggest some workouts?",
-        "I need exercise tips",
-        "Recommend Some Exercise."
-      ],
-      "responses": [
-        "Certainly! I can recommend exercises based on your Prakriti and fitness goals. Let's get started!",
-        "I can provide personalized exercise suggestions to help you stay healthy and balanced."
-      ]
-    },
-    {
-      "tag": "stress_management",
-      "patterns": [
-        "How can I manage stress?",
-        "Give me stress-relief tips",
-        "I'm feeling stressed"
-      ],
-      "responses": [
-        "Managing stress is crucial for overall well-being. I can offer tips and techniques to help you relax and unwind.",
-        "I can provide stress management strategies, including mindfulness practices, deep breathing exercises, and relaxation techniques."
-      ]
-    },
-    {
-      "tag": "sleep_tips",
-      "patterns": [
-        "How can I improve my sleep?",
-        "Give me sleep tips",
-        "I have trouble sleeping"
-      ],
-      "responses": [
-        "Improving sleep quality is essential for health. I can suggest tips and practices to promote better sleep hygiene.",
-        "I can offer advice on enhancing sleep quality, including establishing a bedtime routine, creating a comfortable sleep environment, and practicing relaxation techniques."
-      ]
-    },
-    {
-      "tag": "nutrition_information",
-      "patterns": [
-        "Tell me about nutrition",
-        "Give me nutrition facts",
-        "I want to learn about healthy eating"
-      ],
-      "responses": [
-        "Nutrition plays a vital role in overall health. I can provide information on balanced diets, essential nutrients, and healthy eating habits.",
-        "I can offer insights into nutrition and dietary principles to help you make informed choices for optimal health and wellness."
+        "I can provide you with diet recommendations based on your Prakriti. First, determine your Prakriti type, and then I can recommend a suitable diet plan tailored to your constitution.</br> To determine Your Prakrit Type <code>Determine My Prakriti.</code>"
       ]
     },
     {
@@ -302,7 +249,12 @@
     },
     {
       "tag": "info_prakriti",
-      "patterns": ["what is prakriti", "tell me more about the prakriti"],
+      "patterns": [
+        "what is prakriti",
+        "tell me more about the prakriti",
+        "why Should i Believe you",
+        "Give Information about the prakriti"
+      ],
       "responses": [
         "Prakriti is a Sanskrit word that means the original or natural form or condition of anything, original or primary substance. It is a key concept in Hinduism, formulated by its Sankhya school. There are three types of doshas Vata, Pitta & Kapha",
         "Prakriti is an inherent nature of an individual determined at the time of your birth, which can not be changed during your lifetime. Ayurveda broadly classifies human nature in two types - Mental and Physical Nature."
@@ -312,8 +264,10 @@
       "tag": "info_dosha",
       "patterns": [
         "What is doshas",
+        "What is dosha",
         "tell me about the doshas",
-        "guide about the doshas"
+        "guide about the doshas",
+        "Explain about the Doshas"
       ],
       "responses": [
         "According to Ayurveda, doshas are energy patterns that flow around our bodies, governing our thinking and behavior. The three primary doshas are vata, pitta, and kapha. Each dosha is made up of a different combination of the five elements: air, space, fire, earth, and water",
@@ -349,12 +303,35 @@
       "patterns": [
         "What is Pitta",
         "pitta",
-        "Explain aobut the pitta",
+        "Explain about the pitta",
         "Guide about the pitta",
         "what does mean pitta"
       ],
       "responses": [
         "Pitta translates roughly as fire. However, the term does not mean fire in the literal sense, in the way you might experience or sense it as candlelight or in an open fire. Pitta dosha, the heat energy in the body, is invisible. It manifests itself in your metabolism."
+      ]
+    },
+    {
+      "tag": "info_ayurveda",
+      "patterns": [
+        "What is ayurveda",
+        "Purpose of Ayurveda in Prakriti",
+        "Explain about Ayurveda",
+        "What do you mean by Ayurveda"
+      ],
+      "responses": [
+        "Ayurveda, originating in ancient India, is a holistic system of medicine. It emphasizes balance in the body, mind, and spirit for optimal health. Central to Ayurveda is the concept of Prakriti, or individual constitution, determined by three doshas: Vata, Pitta, and Kapha. Understanding one's Prakriti guides personalized treatments, including dietary adjustments and lifestyle changes, to maintain well-being and prevent illness."
+      ]
+    },
+    {
+      "tag": "repetition",
+      "patterns": [
+        "You Gave me same answer again",
+        "Same Answer again",
+        "Same Response as Previous"
+      ],
+      "responses": [
+        "I apologize for providing the same response. My training primarily focuses on determining Prakriti, which may limit the variety of answers I can provide. "
       ]
     }
   ]
