@@ -112,6 +112,8 @@ const Chatbot = ({ open, set }) => {
               className="hover:bg-sky-400"
               type="button"
               onClick={() => {
+                websckt.close();
+                setWebsckt();
                 set(!open);
               }}
             >
