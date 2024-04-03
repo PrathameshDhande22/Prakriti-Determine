@@ -13,12 +13,13 @@ from diet import recommend_Diet
 from logger import logger
 from models import ChatResponse, Intents, PrakritBotResponse, Reply, Response
 from question import questions
+from keras.models import load_model
 
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = str(0)
-chatBot_Model = load(os.path.join("Models/nlpbot"))
+chatBot_Model = load_model(os.path.join("Models", "nlpbot.keras"))
 words: list = load(os.path.join("Models/words"))
 classes: list = load(os.path.join("Models/classes"))
-prakriti_Model = load(os.path.join("Models/prakriti"))
+prakriti_Model = load_model(os.path.join("Models", "prakriti.keras"))
 intents: Intents = json.loads(open(os.path.join("intents.json"), "r").read())
 lemmatizer = WordNetLemmatizer()
 

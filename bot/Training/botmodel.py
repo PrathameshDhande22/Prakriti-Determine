@@ -7,10 +7,9 @@ from keras.optimizers import SGD
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 import random
-from joblib import dump
 import logging
 import os
-from venv import logger
+from joblib import dump
 
 logging.basicConfig(
     format="%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s",
@@ -120,4 +119,6 @@ model.fit(np.array(train_x), np.array(train_y),
 
 logging.info("Model has been Trained")
 logging.info("dumping the Model")
-dump(model, os.path.join("Models/nlpbot"))
+
+model.save(os.path.join("Models", "nlpbot.keras"))
+logging.info("Model has been Dumped Successfully")

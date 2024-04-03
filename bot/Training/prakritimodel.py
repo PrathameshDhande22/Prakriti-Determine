@@ -62,6 +62,6 @@ logger.info("Training the Model Now.")
 model.fit(X_train, y_train, epochs=25, batch_size=64, validation_split=0.2)
 
 logger.info("Dumping the Model as the object to Model Folder")
-dump(model, filename=str(os.path.join("Models/prakriti")))
+model.save(os.path.join("Models","prakriti.keras"))
 
 logger.info("Model has been Dumped Successfully.")
