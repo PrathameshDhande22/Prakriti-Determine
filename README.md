@@ -1,4 +1,4 @@
-# Prikriti Determine
+# Prakriti Determine
 
 ![windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
@@ -23,4 +23,144 @@ Determining an individual's Prakriti, a fundamental concept in Ayurveda has long
 
 ![FNN Architecture](./Assets/Fnn%20architecture.png)
 
-## Working and Installation Guide will be shared later.
+## Output Video will be posted Here Later.
+
+## Installation Guide
+
+### ChatBot 💻 Installation & Training Guide
+
+1. Make Sure you have installed the **Python** and version should be **>=3.10**.
+
+2. Navigate to the bot Folder using command
+
+```
+cd bot
+```
+
+then create the `Models` Folder inside it
+
+```
+mkdir Models
+```
+
+3. Create Virtual Environment using virtualenv or any package you need here I'm preferring `virtualenv`
+
+   1. Install the `virtualenv` package using pip
+
+   ```
+   pip install virtualenv
+   ```
+
+   2. Create the Virtual Environment
+
+   ```
+   virtualenv project
+   ```
+
+   3. Activate the Virtual Environment.
+
+      For windows :
+
+      ```
+      project/Scripts/activate
+      ```
+
+      For Ubuntu :
+
+      ```
+      source project/bin/activate
+      ```
+
+4. Install the packages required to run the project.
+
+```
+pip install tensorflow pandas nltk scikit-learn sqlalchemy fastapi uvicorn websockets
+```
+
+**Note :** Wait for the packages to be installed if you encountered any error or problems try to install the packages one by one.
+
+5. Train the Chatbot Model on the same terminal. Make sure you are in the bot folder in terminal.
+
+   For Windows:
+
+   ```
+   python Training/botmodel.py
+   ```
+
+   For Ubuntu:
+
+   ```
+   python3 Training/botmodel.py
+   ```
+
+6. Train the Prakriti Model on the same Terminal.
+
+   For Windows:
+
+   ```
+   python Training/prakritimodel.py
+   ```
+
+   For Ubuntu:
+
+   ```
+   python3 Training/prakritimodel.py
+   ```
+
+7. Run the API to serve both trained Model to connect with the Frontend.
+
+   For Windows:
+
+   ```
+   python app.py
+   ```
+
+   For Ubuntu:
+
+   ```
+   python3 app.py
+   ```
+
+8. Wait for the API to startup then copy the url in which the api is running.
+
+   e.g: `https://127.0.0.1:8000` only copy part from `127.0.0.1:8000`
+
+   The URL may be different for different OS make a note of it.
+
+**The API is Running Successfully 😃😃😃😃.**
+
+### Frontend Installation 🖼️
+
+1. Make sure you have installed **Nodejs** in your system.
+
+2. Navigate to `frontend` folder.
+
+```
+cd frontend
+```
+
+3. Install the packages.
+
+```
+npm i
+```
+
+4. After Installing all the packages make some changes in `.env` file which is located in `frontend` folder.
+
+```
+VITE_API=ws://127.0.0.1:8000
+```
+
+Paste your copied url or server url in place of `127.0.0.1:8000`
+
+5. Run the Frontend.
+
+```
+npm run dev
+```
+
+**The frontend is Running Successfully 😃😃😃.**
+
+You have successfully setup your project.
+
+## Author: Prathamesh Dhande
