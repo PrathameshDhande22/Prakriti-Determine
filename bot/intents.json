@@ -49,7 +49,8 @@
         "Thank you Bot",
         "Thank you soo much",
         "You are Beautiful Bot",
-        "You are Great"
+        "You are Great",
+        "Welcome"
       ],
       "responses": ["Happy to help!", "Any time!", "My pleasure"]
     },
@@ -165,7 +166,14 @@
     },
     {
       "tag": "acknowledge",
-      "patterns": ["ok", "yeah", "This should be best", "Now I Understand"],
+      "patterns": [
+        "ok",
+        "yeah",
+        "This should be best",
+        "Now I Understand",
+        "yes",
+        "K"
+      ],
       "responses": ["Great!", "Got it!", "Perfect!", "Awesome!"]
     },
     {
