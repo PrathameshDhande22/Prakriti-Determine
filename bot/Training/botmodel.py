@@ -5,12 +5,12 @@ import json
 import numpy as np
 from keras.optimizers import SGD
 from keras.models import Sequential
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, Input
 import random
 import logging
 import os
 from joblib import dump
-
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = str(0)
 logging.basicConfig(
     format="%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s",
     level=logging.INFO,
@@ -102,7 +102,8 @@ train_y = list(training_data[:, 1])
 
 logging.info("Initializing the Keras Model")
 model = Sequential()
-model.add(Dense(128, input_shape=(len(train_x[0]),), activation="relu"))
+model.add(Input(shape=(len(train_x[0]),)))
+model.add(Dense(128, activation="relu"))
 model.add(Dropout(0.5))
 model.add(Dense(64, activation="relu"))
 model.add(Dropout(0.5))

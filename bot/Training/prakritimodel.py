@@ -1,6 +1,14 @@
+from sklearn.model_selection import train_test_split
+import pandas as pd
+from tensorflow import optimizers
+from tensorflow import keras
+from joblib import dump
+import os
 import logging
 import sys
-
+import numpy as np
+from sklearn.metrics import accuracy_score, confusion_matrix
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = str(0)
 # Initializing the logging module to log everything.
 format = "%(asctime)s - %(filename)s - %(levelname)s - Line No : %(lineno)d - %(message)s"
 logger = logging.getLogger(__name__)
@@ -11,12 +19,6 @@ console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 
 # Importing the required Modules
-import os
-from joblib import dump
-from tensorflow import keras
-from tensorflow import optimizers
-import pandas as pd
-from sklearn.model_selection import train_test_split
 
 logger.info("Training the prakriti Model")
 
@@ -30,13 +32,14 @@ Y = df.iloc[:, 20].values
 
 logger.info("Splitting the 80% training and 20% Testing dataset")
 X_train, X_test, y_train, y_test = train_test_split(
-    X, Y, test_size=0.2, random_state=42
+    X, Y, test_size=0.2,random_state=32
 )
 
 logger.info("Creating the Model")
 model = keras.Sequential(
     [
-        keras.layers.Dense(19, input_shape=(20,), activation="relu"),
+        keras.layers.Input(shape=(20,)),
+        keras.layers.Dense(19, activation="relu"),
         keras.layers.Dense(300, activation="relu"),
         keras.layers.Dense(250, activation="relu"),
         keras.layers.Dense(200, activation="relu"),
@@ -61,7 +64,15 @@ model.compile(
 logger.info("Training the Model Now.")
 model.fit(X_train, y_train, epochs=25, batch_size=64, validation_split=0.2)
 
+logger.info("Testing the Model with testing dataset")
+y_predict = model.predict(X_test)
+
+logger.info("Testing the Accuracy of the Model")
+y_predict_labels = [np.argmax(i) for i in y_predict]
+print("Accuracy : ", accuracy_score(y_test, y_predict_labels)*100, "%")
+print("Confusion Matrix : \n", confusion_matrix(y_test, y_predict_labels))
+
 logger.info("Dumping the Model as the object to Model Folder")
-model.save(os.path.join("Models","prakriti.keras"))
+model.save(os.path.join("Models", "prakriti.keras"))
 
 logger.info("Model has been Dumped Successfully.")
