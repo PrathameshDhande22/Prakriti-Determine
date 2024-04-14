@@ -3,10 +3,26 @@ import { RiRobot2Line } from "react-icons/ri";
 import parse from "html-react-parser";
 import { useContext, useState } from "react";
 import { ChatSendMessage } from "./Chatbot";
+import Modal from "./Modal";
+import { BsExclamationCircle } from "react-icons/bs";
+import { Tooltip } from "react-tooltip";
 
 export const ChatMessage = ({ message }) => {
   const [selected, setSelected] = useState(false);
   const { handleClick } = useContext(ChatSendMessage);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleShowModal = () => {
+    setModalOpen(true);
+    if (typeof window != "undefined" && window.document) {
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    document.body.style.overflow = "unset";
+  };
 
   if (typeof message === "string") {
     return (
@@ -68,11 +84,31 @@ export const ChatMessage = ({ message }) => {
     } else
       return (
         <>
+          {message?.assets && (
+            <Modal
+              setModalOpen={handleCloseModal}
+              modalOpen={modalOpen}
+              assets={message?.assets}
+              title={message["question"]}
+            />
+          )}
           <div className="flex flex-row items-center gap-2 h-full">
             <RiRobot2Line size={18} className="text-blue-800" />
             <div className="w-[70%] animate__animated animate__faster animate__fadeIn">
-              <div className="bg-gray-200 p-2 w-full rounded-lg font-lora ">
-                {parse(message["question"])}
+              <div className="bg-gray-200 flex flex-row justify-between items-center p-2 w-full rounded-lg font-lora ">
+                <span>{parse(message["question"])}</span>
+                {message?.assets && !selected && (
+                  <button
+                    type="button"
+                    onClick={handleShowModal}
+                    className="hover:bg-gray-300 p-1 rounded-lg active:bg-white"
+                    data-tooltip-id="description-tooltip"
+                    data-tooltip-content="Detailed Explanation of Question"
+                  >
+                    <BsExclamationCircle size={20} color="red" />
+                  </button>
+                )}
+                <Tooltip id="description-tooltip" place="top" variant="dark"/>
               </div>
               <div
                 className={`w-full pt-2 flex flex-col flex-wrap gap-2 items-center ${

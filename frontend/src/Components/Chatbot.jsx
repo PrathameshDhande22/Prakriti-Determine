@@ -112,7 +112,9 @@ const Chatbot = ({ open, set }) => {
               className="hover:bg-sky-400"
               type="button"
               onClick={() => {
-                websckt.close();
+                if (websckt) {
+                  websckt.close();
+                }
                 setWebsckt();
                 set(!open);
               }}
@@ -123,11 +125,11 @@ const Chatbot = ({ open, set }) => {
         </div>
         <div
           className={`relative ${
-            fullsize ? "h-[88%]" : "h-96"
+            fullsize ? "h-[90%]" : "h-[86%] sm:h-96"
           } pt-4 pl-4 pb-4 mb-4 overflow-scroll`}
           ref={messageRef}
         >
-          <div className="relative flex flex-col gap-2">
+          <div className="relative flex flex-col gap-2 pb-4">
             <ChatSendMessage.Provider value={{ handleClick }}>
               <Messages queries={queries} />
             </ChatSendMessage.Provider>
@@ -136,7 +138,7 @@ const Chatbot = ({ open, set }) => {
         {error ? (
           <Error />
         ) : (
-          <div className="flex flex-row items-center justify-between gap-3 absolute w-full bottom-0 p-2">
+          <div className="flex flex-row items-center justify-between gap-3 absolute w-full bottom-0 p-2 bg-white">
             <input
               ref={inputRef}
               type="text"
