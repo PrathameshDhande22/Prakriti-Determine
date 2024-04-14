@@ -165,7 +165,7 @@ def askQuestion(msg: Reply, session: Session) -> dict | str:
                 recommend = True
                 return [
                     msg,
-                    f"The input you provided is {already_known} and our model predicted as {prakriti.prakriti} is different.",
+                    f"The input you provided is <b>{already_known.title()}</b> and our model predicted as <b>{prakriti.prakriti.title()}</b> is different.",
                     "It seems that there may be one or more incorrect answers to the questions you provided. Please review and verify your responses.",
                     {
                         "question": "Want Diet Recommendation based on Your Prakriti?",
@@ -181,7 +181,6 @@ def askQuestion(msg: Reply, session: Session) -> dict | str:
                     "options": {0: "yes", 1: "no"},
                 },
             ]
-
         return questions.get(i)
 
 
@@ -254,7 +253,7 @@ async def chatWithUser(msg: Reply, session: Session) -> ChatResponse:
                             if start_questionaire:
                                 return {
                                     "response": [
-                                        f"Your Response has been recorded as <b>{already_known}</b>",
+                                        f"Your Response has been recorded as <b>{already_known.title()}</b>",
                                         "Please provide the answer to the following question to enhance my accuracy. I will then use your response for analysis.",
                                         askQuestion(msg, session),
                                     ]
@@ -320,11 +319,13 @@ async def chatWithUser(msg: Reply, session: Session) -> ChatResponse:
         elif recommend:
             if str(msg.get("message")).lower().strip() == "yes":
                 diet = recommend_Diet(prakriti.prakriti)
+                diet.append(
+                    "Thank You For predicting Prakriti with <b>AYURBOT</b>")
                 clearAll()
                 return {"response": diet}
             else:
                 clearAll()
-                return {"response": "Skipped Diet Recommendation"}
+                return {"response": ["Skipped Diet Recommendation", "Thank You For predicting Prakriti with <b>AYURBOT</b>"]}
         else:
             reply: Response = getResponseChat(msg["message"])
             print(f"tag => {reply['tag']} , message => {reply['response']}")
@@ -332,6 +333,7 @@ async def chatWithUser(msg: Reply, session: Session) -> ChatResponse:
                 flag = True
                 resp = [
                     reply.get("response"),
+                    "<b>NOTE</b>: Click on Exclamation Mark at the Right hand side of the each Question to Know the Explanation of the asked Question and Options.",
                     {
                         "question": "Answer Yes to get Started?",
                         "options": {0: "yes", 1: "no"},
