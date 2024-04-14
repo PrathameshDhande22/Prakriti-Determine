@@ -5,4 +5,4 @@ Models/
 prakriti.db
 *.log
 .env
-.venv/
+venv/
