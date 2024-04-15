@@ -3,7 +3,6 @@ import { BsExclamationCircle } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 
 const Modal = ({ modalOpen, setModalOpen, title, assets }) => {
-  console.log(assets);
   return (
     <div
       className={`fixed top-0 bg-black/40 h-screen z-[200] w-screen animate__animated animate__fadeIn left-0 ${
