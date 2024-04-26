@@ -6,3 +6,4 @@ prakriti.db
 *.log
 .env
 venv/
+Outputs/
