@@ -4,10 +4,10 @@ import { IoCloseSharp } from "react-icons/io5";
 import "animate.css";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import { BsFillSendFill } from "react-icons/bs";
-import Messages from "./Messages";
 import chatanim from "../Assets/chatanim.gif";
 import ChatAPI from "../Config";
 import Error from "./Error";
+import MemoizedMessages from "./Messages";
 
 export const ChatSendMessage = createContext();
 
@@ -70,8 +70,15 @@ const Chatbot = ({ open, set }) => {
       ]);
       websckt.send(JSON.stringify(sendingMessage));
       websckt.onmessage = (e) => {
-        const message = JSON.parse(e.data);
-        setQueries((old) => [...old, message]);
+        if (typeof e.data === "string") {
+          const message = JSON.parse(e.data);
+          setQueries((old) => [...old, message]);
+        } else if (typeof e.data === "object") {
+          setQueries((old) => [
+            ...old,
+            { name: "bot", message: { download: "button", blob: e.data } },
+          ]);
+        }
       };
       if (!selectedInput) {
         inputRef.current.value = "";
@@ -131,7 +138,7 @@ const Chatbot = ({ open, set }) => {
         >
           <div className="relative flex flex-col gap-2 pb-4">
             <ChatSendMessage.Provider value={{ handleClick }}>
-              <Messages queries={queries} />
+              <MemoizedMessages queries={queries} />
             </ChatSendMessage.Provider>
           </div>
         </div>

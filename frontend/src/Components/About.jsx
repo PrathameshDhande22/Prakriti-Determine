@@ -8,7 +8,6 @@ function About() {
       <div className="about-image-content">
         <img src={AIayurveda} alt="Ayurveda with AI" className="about-image1" />
       </div>
-
       <div className="about-text-content">
         <h3 className="about-title">
           <span>About Us</span>

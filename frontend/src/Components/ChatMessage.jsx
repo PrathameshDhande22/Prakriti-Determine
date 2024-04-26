@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import { RiRobot2Line } from "react-icons/ri";
 import parse from "html-react-parser";
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { ChatSendMessage } from "./Chatbot";
 import Modal from "./Modal";
 import { BsExclamationCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
+import { MemoizedDownload } from "./DownloadButton";
 
-export const ChatMessage = ({ message }) => {
+const ChatMessage = ({ message }) => {
   const [selected, setSelected] = useState(false);
   const { handleClick } = useContext(ChatSendMessage);
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,7 +25,16 @@ export const ChatMessage = ({ message }) => {
     document.body.style.overflow = "unset";
   };
 
-  if (typeof message === "string") {
+  if (message?.download) {
+    return (
+      <div className="flex flex-row items-center gap-2 h-full">
+        <RiRobot2Line size={18} className="text-blue-800" />
+        <span className="bg-gray-200 p-2 w-[70%] animate__animated animate__faster animate__fadeIn  rounded-lg font-lora">
+          <MemoizedDownload blob={message?.blob} />
+        </span>
+      </div>
+    );
+  } else if (typeof message === "string") {
     return (
       <>
         <div className="flex flex-row items-center gap-2 h-full">
@@ -108,7 +118,7 @@ export const ChatMessage = ({ message }) => {
                     <BsExclamationCircle size={20} color="red" />
                   </button>
                 )}
-                <Tooltip id="description-tooltip" place="top" variant="dark"/>
+                <Tooltip id="description-tooltip" place="top" variant="dark" />
               </div>
               <div
                 className={`w-full pt-2 flex flex-col flex-wrap gap-2 items-center ${
@@ -141,6 +151,8 @@ export const ChatMessage = ({ message }) => {
       );
   }
 };
+
+export const BotMessage = memo(ChatMessage);
 
 ChatMessage.propTypes = {
   message: PropTypes.any,
