@@ -1,8 +1,11 @@
+import asyncio
 import json
 import os
 import random
 from threading import Thread
+from typing import Any
 
+from fastapi import WebSocket
 import numpy as np
 from joblib import load
 from nltk import WordNetLemmatizer, word_tokenize
@@ -14,6 +17,8 @@ from logger import logger
 from models import ChatResponse, Intents, PrakritBotResponse, Reply, Response
 from question import questions
 from keras.models import load_model
+
+from utils import createPDF
 
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = str(0)
 chatBot_Model = load_model(os.path.join("Models", "nlpbot.keras"))
@@ -196,7 +201,17 @@ def handleWrongAnswer(response: str | dict | list) -> ChatResponse:
         }
 
 
-async def chatWithUser(msg: Reply, session: Session) -> ChatResponse:
+async def sendPDFBytes(toConsume: str, toAvoid: str, websocket: WebSocket, doshas: str) -> None:
+    pdfbytes = createPDF(toConsume, toAvoid, doshas)
+    await websocket.send_json({"name": "bot", "message": "Your PDF has been Created."})
+    await websocket.send_bytes(pdfbytes)
+
+
+def runAsynioFunc(args: Any):
+    asyncio.run(args)
+
+
+async def chatWithUser(msg: Reply, session: Session, websocket: WebSocket) -> ChatResponse:
     global flag, limit, i, ans_list, confirm, count_wrong, recommend, prakriti, already_known, ask_Known, start_questionaire
     try:
         if flag:
@@ -226,7 +241,7 @@ async def chatWithUser(msg: Reply, session: Session) -> ChatResponse:
             elif not confirm:
                 return handleWrongAnswer(
                     [
-                        "Give Proper Input either <code>yes</code> or <code>no</code>",
+                        "Give Proper Input either <code>Yes</code> or <code>No</code>",
                         {
                             "question": "Answer Yes to get Started?",
                             "options": {0: "yes", 1: "no"},
@@ -319,8 +334,12 @@ async def chatWithUser(msg: Reply, session: Session) -> ChatResponse:
         elif recommend:
             if str(msg.get("message")).lower().strip() == "yes":
                 diet = recommend_Diet(prakriti.prakriti)
+                Thread(target=runAsynioFunc, args=(sendPDFBytes(
+                    diet[0][20:], diet[1][18:], websocket, prakriti.prakriti),)).start()
                 diet.append(
                     "Thank You For predicting Prakriti with <b>AYURBOT</b>")
+                diet.append(
+                    "Your diet plan in PDF format will be available shortly. Please Wait for Some time.")
                 clearAll()
                 return {"response": diet}
             else:

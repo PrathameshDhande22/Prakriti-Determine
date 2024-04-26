@@ -4,6 +4,7 @@ from json import JSONDecodeError
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
+from weasyprint import HTML
 
 from chatModule import chatWithUser
 from database import initDB
@@ -34,10 +35,13 @@ async def chatsocket(websocket: WebSocket) -> Reply:
         await websocket.send_json({"name": "bot", "message": "Welcome to AyurBot 🙏"})
         while True:
             received: Reply = await websocket.receive_json()
-            chat: ChatResponse = await chatWithUser(received, session)
+            chat: ChatResponse = await chatWithUser(received, session,websocket)
             if isinstance(chat.get("response"), list):
                 for resps in chat.get("response"):
-                    await websocket.send_json({"name": "bot", "message": resps})
+                    if isinstance(resps, bytes):
+                        await websocket.send_bytes(resps)
+                    else:
+                        await websocket.send_json({"name": "bot", "message": resps})
                     time.sleep(1.1)
             else:
                 await websocket.send_json(
