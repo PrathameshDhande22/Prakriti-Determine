@@ -17,19 +17,15 @@ function About() {
             "Welcome to AyurInsights, your gateway to the harmonious fusion of ancient Ayurvedic wisdom and modern technology. At AyurInsights, we're dedicated to empowering individuals with profound insights into their well-being, health, and constitution. Our journey began with a simple yet powerful question: how can we blend the timeless principles of Ayurveda with the precision of modern machine learning to enhance lives?"
           }
         </p>
-
         <h4 className="about-text-title">Your Solutions</h4>
-
         <SolutionStep
           title="Click On Chat Bot"
           description="Locate the Chat with our Ayurvedic Expert button on the homepage and click it."
         />
-
         <SolutionStep
           title="Start the Conversation"
           description="Once the chat interface opens, initiate a conversation with our AI-powered chatbot by responding to its greetings."
         />
-
         <SolutionStep
           title="Answer Questions"
           description="The chatbot will ask you a series of questions related to your health, lifestyle, and preferences. Provide honest and detailed responses."

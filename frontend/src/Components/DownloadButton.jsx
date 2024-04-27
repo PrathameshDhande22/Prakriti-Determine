@@ -22,7 +22,7 @@ const DownloadButton = ({ blob }) => {
 
   return (
     <div className="flex flex-row flex-wrap items-center gap-1">
-      <span>Download Your Diet Plan in PDF Format : </span>
+      <span>Download Your Recommendation in PDF Format : </span>
       <button
         type="button"
         onClick={handleClick}

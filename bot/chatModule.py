@@ -170,10 +170,11 @@ def askQuestion(msg: Reply, session: Session) -> dict | str:
                 recommend = True
                 return [
                     msg,
+                    {"share": "Prakriti", "dosha": prakriti.prakriti.title()},
                     f"The input you provided is <b>{already_known.title()}</b> and our model predicted as <b>{prakriti.prakriti.title()}</b> is different.",
                     "It seems that there may be one or more incorrect answers to the questions you provided. Please review and verify your responses.",
                     {
-                        "question": "Want Diet Recommendation based on Your Prakriti?",
+                        "question": "Want Diet & LifeStyle Recommendation based on Your Prakriti?",
                         "options": {0: "yes", 1: "no"},
                     },
                 ]
@@ -181,8 +182,9 @@ def askQuestion(msg: Reply, session: Session) -> dict | str:
             recommend = True
             return [
                 msg,
+                {"share": "Prakriti", "dosha": prakriti.prakriti.title()},
                 {
-                    "question": "Want Diet Recommendation based on Your Prakriti?",
+                    "question": "Want Diet & LifeStyle Recommendation based on Your Prakriti?",
                     "options": {0: "yes", 1: "no"},
                 },
             ]
@@ -201,8 +203,8 @@ def handleWrongAnswer(response: str | dict | list) -> ChatResponse:
         }
 
 
-async def sendPDFBytes(toConsume: str, toAvoid: str, websocket: WebSocket, doshas: str) -> None:
-    pdfbytes = createPDF(toConsume, toAvoid, doshas)
+async def sendPDFBytes(toConsume: str, toAvoid: str, websocket: WebSocket, doshas: str, lifestyle: str) -> None:
+    pdfbytes = createPDF(toConsume, toAvoid, doshas, lifestyle)
     await websocket.send_json({"name": "bot", "message": "Your PDF has been Created."})
     await websocket.send_bytes(pdfbytes)
 
@@ -231,7 +233,7 @@ async def chatWithUser(msg: Reply, session: Session, websocket: WebSocket) -> Ch
                 confirm = True
                 return {
                     "response": {
-                        "question": "Do you already know your Prakriti? If yes, could you please share it with me?",
+                        "question": "Do you already know your Prakriti? If Yes, could you please share it with me?",
                         "options": {0: "yes", 1: "no"},
                     }
                 }
@@ -325,7 +327,7 @@ async def chatWithUser(msg: Reply, session: Session, websocket: WebSocket) -> Ch
                             [
                                 "Please give Proper Input Either Yes or No",
                                 {
-                                    "question": "Do you already know your Prakriti? If yes, could you please share it with me?",
+                                    "question": "Do you already know your Prakriti? If Yes, could you please share it with me?",
                                     "options": {0: "yes", 1: "no"},
                                 },
                             ]
@@ -334,12 +336,13 @@ async def chatWithUser(msg: Reply, session: Session, websocket: WebSocket) -> Ch
         elif recommend:
             if str(msg.get("message")).lower().strip() == "yes":
                 diet = recommend_Diet(prakriti.prakriti)
+                lifestyle = diet.pop(2)
                 Thread(target=runAsynioFunc, args=(sendPDFBytes(
-                    diet[0][20:], diet[1][18:], websocket, prakriti.prakriti),)).start()
+                    diet[0][20:], diet[1][18:], websocket, prakriti.prakriti, lifestyle),)).start()
                 diet.append(
                     "Thank You For predicting Prakriti with <b>AYURBOT</b>")
                 diet.append(
-                    "Your diet plan in PDF format will be available shortly. Please Wait for Some time.")
+                    "Your personalized advice on lifestyle, diet, and related videos for your Prakriti will be ready to download in PDF format soon. Please be patient while it processes.")
                 clearAll()
                 return {"response": diet}
             else:

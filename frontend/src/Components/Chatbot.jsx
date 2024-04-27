@@ -87,10 +87,21 @@ const Chatbot = ({ open, set }) => {
     [websckt]
   );
 
+  const handleMaximizeandMinimize = () => {
+    setFullSize(!fullsize);
+    if (!fullsize) {
+      if (typeof window != "undefined" && window.document) {
+        document.body.style.overflow = "hidden";
+      }
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  };
+
   return (
     <div className="relative h-full flex justify-center flex-col">
       <div
-        className={`z-30 self-center rounded-lg border-4 border-sky-400  pb-5 bg-white animate__animated animate__fadeIn ${
+        className={`z-30 self-center rounded-lg border-4 border-sky-400  pb-5 bg-white animate__animated animate__fadeIn shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)] ${
           fullsize
             ? "w-full h-screen top-0 fixed"
             : "w-[90%] sm:w-[400px] fixed sm:top-[15%] top-3 sm:right-7 h-[95%] md:h-fit"
@@ -105,9 +116,7 @@ const Chatbot = ({ open, set }) => {
             <button
               type="button"
               className="hover:bg-sky-400"
-              onClick={() => {
-                setFullSize(!fullsize);
-              }}
+              onClick={handleMaximizeandMinimize}
             >
               {!fullsize ? (
                 <FiMaximize2 size={20} />

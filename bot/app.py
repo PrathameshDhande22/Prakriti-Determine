@@ -38,10 +38,7 @@ async def chatsocket(websocket: WebSocket) -> Reply:
             chat: ChatResponse = await chatWithUser(received, session,websocket)
             if isinstance(chat.get("response"), list):
                 for resps in chat.get("response"):
-                    if isinstance(resps, bytes):
-                        await websocket.send_bytes(resps)
-                    else:
-                        await websocket.send_json({"name": "bot", "message": resps})
+                    await websocket.send_json({"name": "bot", "message": resps})
                     time.sleep(1.1)
             else:
                 await websocket.send_json(
