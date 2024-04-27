@@ -33,9 +33,9 @@ Determining an individual's Prakriti, a fundamental concept in Ayurveda has long
 
 2. Navigate to the bot Folder using command
 
-```
-cd bot
-```
+   ```
+   cd bot
+   ```
 
 then create the `Models` Folder inside it
 
@@ -47,15 +47,15 @@ mkdir Models
 
    1. Install the `virtualenv` package using pip
 
-   ```
-   pip install virtualenv
-   ```
+      ```
+      pip install virtualenv
+      ```
 
    2. Create the Virtual Environment
 
-   ```
-   virtualenv project
-   ```
+      ```
+      virtualenv project
+      ```
 
    3. Activate the Virtual Environment.
 
@@ -71,15 +71,21 @@ mkdir Models
       source project/bin/activate
       ```
 
-4. Install the packages required to run the project.
+4. Before installing packages, first download the `GTK Runtime` in your system. These Runtime Environment will help you to create the PDF from the HTML also the backend of the package `weasyprint`
 
-```
-pip install tensorflow pandas nltk scikit-learn sqlalchemy fastapi uvicorn websockets
-```
+   Download the Runtime Environment for Windows from Here [GTK Runtime](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases)
+
+   Other Operating System refer to the Installation process of the `weasyprint` package [Read here](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html)
+
+5. Install the packages required to run the project.
+
+   ```
+   pip install tensorflow pandas nltk scikit-learn sqlalchemy fastapi uvicorn websockets weasyprint
+   ```
 
 **Note :** Wait for the packages to be installed if you encountered any error or problems try to install the packages one by one.
 
-5. Train the Chatbot Model on the same terminal. Make sure you are in the bot folder in terminal.
+6. Train the Chatbot Model on the same terminal. Make sure you are in the bot folder in terminal.
 
    For Windows:
 
@@ -93,7 +99,7 @@ pip install tensorflow pandas nltk scikit-learn sqlalchemy fastapi uvicorn webso
    python3 Training/botmodel.py
    ```
 
-6. Train the Prakriti Model on the same Terminal.
+7. Train the Prakriti Model on the same Terminal.
 
    For Windows:
 
@@ -107,7 +113,7 @@ pip install tensorflow pandas nltk scikit-learn sqlalchemy fastapi uvicorn webso
    python3 Training/prakritimodel.py
    ```
 
-7. Run the API to serve both trained Model to connect with the Frontend.
+8. Run the API to serve both trained Model to connect with the Frontend.
 
    For Windows:
 
@@ -121,7 +127,7 @@ pip install tensorflow pandas nltk scikit-learn sqlalchemy fastapi uvicorn webso
    python3 app.py
    ```
 
-8. Wait for the API to startup then copy the url in which the api is running.
+9. Wait for the API to startup then copy the url in which the api is running.
 
    e.g: `https://127.0.0.1:8000` only copy part from `127.0.0.1:8000`
 
