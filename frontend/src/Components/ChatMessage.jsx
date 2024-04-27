@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { RiRobot2Line } from "react-icons/ri";
 import parse from "html-react-parser";
 import { memo, useContext, useState } from "react";
 import { ChatSendMessage } from "./Chatbot";
@@ -7,6 +6,9 @@ import Modal from "./Modal";
 import { BsExclamationCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
 import { MemoizedDownload } from "./DownloadButton";
+import { SimpleMessage } from "./SimpleMessage";
+import { QuestionMessage } from "./QuestionMessage";
+import ShareButtonMemoized from "./ShareButton";
 
 const ChatMessage = ({ message }) => {
   const [selected, setSelected] = useState(false);
@@ -25,71 +27,62 @@ const ChatMessage = ({ message }) => {
     document.body.style.overflow = "unset";
   };
 
-  if (message?.download) {
+  if (message?.share) {
     return (
-      <div className="flex flex-row items-center gap-2 h-full">
-        <RiRobot2Line size={18} className="text-blue-800" />
-        <span className="bg-gray-200 p-2 w-[70%] animate__animated animate__faster animate__fadeIn  rounded-lg font-lora">
-          <MemoizedDownload blob={message?.blob} />
-        </span>
-      </div>
+      <SimpleMessage>
+        <ShareButtonMemoized dosha={message?.dosha} key={2} />
+      </SimpleMessage>
+    );
+  } else if (message?.download) {
+    return (
+      <SimpleMessage>
+        <MemoizedDownload blob={message?.blob} />
+      </SimpleMessage>
     );
   } else if (typeof message === "string") {
-    return (
-      <>
-        <div className="flex flex-row items-center gap-2 h-full">
-          <RiRobot2Line size={18} className="text-blue-800" />
-          <span className="bg-gray-200 p-2 w-[70%] animate__animated animate__faster animate__fadeIn  rounded-lg font-lora">
-            {parse(message)}
-          </span>
-        </div>
-      </>
-    );
+    return <SimpleMessage>{parse(message)}</SimpleMessage>;
   } else if (typeof message === "object") {
     const len = Object.keys(message["options"]).length;
     if (len === 2) {
       return (
-        <>
-          <div className="flex flex-row items-center gap-2 h-full">
-            <RiRobot2Line size={18} className="text-blue-800" />
-            <div className="w-[70%] animate__animated animate__faster animate__fadeIn">
-              <div className="bg-gray-200 p-2 w-full  rounded-lg font-lora">
-                {message["question"]}
-              </div>
-              <div className="w-full pt-1 flex gap-1">
-                {Object.keys(message?.options).map((objkey, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={`w-full gap-1 flex flex-row justify-between items-center ${
-                        selected && "hidden"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="confirmation"
-                        id="confirmbtn"
-                        className="hidden"
-                        value={String(message?.options[objkey])}
-                      />
-                      <label
-                        htmlFor="confirmbtn"
-                        onClick={(e) => {
-                          setSelected(true);
-                          handleClick(e.target.dataset?.value);
-                        }}
-                        className="font-lora text-center hover:bg-blue-600 select-none hover:text-white  transition-colors capitalize border-2 border-gray-400 rounded-md w-full py-1 shadow-lg"
-                        data-value={String(message?.options[objkey])}
-                      >
-                        {String(message?.options[objkey])}
-                      </label>
-                    </div>
-                  );
-                })}
-              </div>
+        <QuestionMessage>
+          <>
+            <div className="bg-gray-200 p-2 w-full  rounded-lg font-lora">
+              {message["question"]}
             </div>
-          </div>
-        </>
+            <div className="w-full pt-1 flex gap-1">
+              {Object.keys(message?.options).map((objkey, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={`w-full gap-1 flex flex-row justify-between items-center ${
+                      selected && "hidden"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="confirmation"
+                      id="confirmbtn"
+                      className="hidden"
+                      value={String(message?.options[objkey])}
+                    />
+                    <label
+                      htmlFor="confirmbtn"
+                      onClick={(e) => {
+                        setSelected(true);
+                        handleClick(e.target.dataset?.value);
+                      }}
+                      className="font-lora text-center hover:bg-blue-600 select-none hover:text-white  transition-colors capitalize border-2 border-gray-400 rounded-md w-full py-1 shadow-lg"
+                      data-value={String(message?.options[objkey])}
+                    >
+                      {String(message?.options[objkey])}
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        </QuestionMessage>
       );
     } else
       return (
@@ -102,9 +95,8 @@ const ChatMessage = ({ message }) => {
               title={message["question"]}
             />
           )}
-          <div className="flex flex-row items-center gap-2 h-full">
-            <RiRobot2Line size={18} className="text-blue-800" />
-            <div className="w-[70%] animate__animated animate__faster animate__fadeIn">
+          <QuestionMessage>
+            <>
               <div className="bg-gray-200 flex flex-row justify-between items-center p-2 w-full rounded-lg font-lora ">
                 <span>{parse(message["question"])}</span>
                 {message?.assets && !selected && (
@@ -145,8 +137,8 @@ const ChatMessage = ({ message }) => {
                   );
                 })}
               </div>
-            </div>
-          </div>
+            </>
+          </QuestionMessage>
         </>
       );
   }
