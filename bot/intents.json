@@ -26,7 +26,7 @@
         "Where is your Source Code"
       ],
       "responses": [
-        "My Source Code is Available in <a href='https://github.com/PrathameshDhande22/Prakriti-Determine'> Github Repository </a>."
+        "My Source Code is Available in <a href='https://github.com/PrathameshDhande22/Prakriti-Determine' style='color: blue;text-decoration: underline;'>Github Repository</a>"
       ]
     },
     {
@@ -67,7 +67,7 @@
         "What can you do ?"
       ],
       "responses": [
-        "I am AyurBot. I can help determine your prakriti type. Prakriti is our inherent nature, with which we are born. It is the nature of our body in terms of dosha. It dies not change during the whole lifetime. It is also responsible for the physical and mental characteristics."
+        "I am AyurBot. I can help determine your prakriti type.<br> Prakriti is our inherent nature, with which we are born. It is the nature of our body in terms of dosha. It dies not change during the whole lifetime. It is also responsible for the physical and mental characteristics."
       ]
     },
     {
@@ -137,7 +137,9 @@
         "Determine my Prakriti",
         "Determine",
         "Detect my Prakriti",
-        "How can i detect my Prakriti?"
+        "How can i detect my Prakriti?",
+        "Predict my Prakriti",
+        "Predict"
       ],
       "responses": [
         "Absolutely, just need you to answer a few questions.",
@@ -188,7 +190,8 @@
         "This is great!",
         "You're doing a good job",
         "I'm impressed!",
-        "You are Great"
+        "You are Great",
+        "Superb bot"
       ],
       "responses": [
         "Thank you! I'm glad you're enjoying it.",
@@ -264,8 +267,8 @@
         "Give Information about the prakriti"
       ],
       "responses": [
-        "Prakriti is a Sanskrit word that means the original or natural form or condition of anything, original or primary substance. It is a key concept in Hinduism, formulated by its Sankhya school. There are three types of doshas Vata, Pitta & Kapha",
-        "Prakriti is an inherent nature of an individual determined at the time of your birth, which can not be changed during your lifetime. Ayurveda broadly classifies human nature in two types - Mental and Physical Nature."
+        "Prakriti is a Sanskrit word that means the original or natural form or condition of anything, original or primary substance. It is a key concept in Hinduism, formulated by its Sankhya school. There are three types of doshas Vata, Pitta & Kapha.</br>Video To Understand <a href='https://youtu.be/sUpT5qfyr1c?feature=shared' style='color: blue;text-decoration: underline;'>https://youtu.be/sUpT5qfyr1c?feature=shared</a>",
+        "Prakriti is an inherent nature of an individual determined at the time of your birth, which can not be changed during your lifetime. Ayurveda broadly classifies human nature in two types - Mental and Physical Nature.</br>Video To Understand <a href='https://youtu.be/sUpT5qfyr1c?feature=shared' style='color: blue;text-decoration: underline;'>https://youtu.be/sUpT5qfyr1c?feature=shared</a>"
       ]
     },
     {
@@ -340,6 +343,17 @@
       ],
       "responses": [
         "I apologize for providing the same response. My training primarily focuses on determining Prakriti, which may limit the variety of answers I can provide. "
+      ]
+    },
+    {
+      "tag": "imbalance_dosha",
+      "patterns": [
+        "What is Imbalance",
+        "Imbalance in Doshas",
+        "Dosha Imbalance"
+      ],
+      "responses": [
+        "Dosha imbalance occurs when one or more doshas become aggravated or out of balance due to various factors such as diet, lifestyle, stress, environmental influences, or seasonal changes. Imbalance in the doshas can lead to physical, mental, and emotional symptoms, disrupting the body's natural state of harmony and predisposing individuals to illness and disease. </br>Video To Understand <a href='https://youtu.be/xRppi-Ezowg?feature=shared' style='color: blue;text-decoration: underline;'>https://youtu.be/xRppi-Ezowg?feature=shared</a>"
       ]
     }
   ]
